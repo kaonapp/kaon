@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "146878219053",
+    "project_id": "fir-example-practice-1a63b",
+    "storage_bucket": "fir-example-practice-1a63b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:146878219053:android:3a56f768e19195f27b49a4",
+        "android_client_info": {
+          "package_name": "com.example.flutter_firebase_demo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "146878219053-6k68hjrfm3a2ag83vthlm2c8bmm6b734.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzrG7PEvZ0Lui6_1LCJFyHnyiA-Jg5WXY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "146878219053-6k68hjrfm3a2ag83vthlm2c8bmm6b734.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "146878219053-pkhhqlqgftghf9lntaua77d2dr8932se.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterFirebaseDemo"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:146878219053:android:6f64871e9535a8f67b49a4",
+        "android_client_info": {
+          "package_name": "com.example.ui"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "146878219053-6k68hjrfm3a2ag83vthlm2c8bmm6b734.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzrG7PEvZ0Lui6_1LCJFyHnyiA-Jg5WXY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "146878219053-6k68hjrfm3a2ag83vthlm2c8bmm6b734.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "146878219053-pkhhqlqgftghf9lntaua77d2dr8932se.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterFirebaseDemo"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
