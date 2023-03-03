@@ -1,6 +1,8 @@
-# ui
+# KAON App
 
-A new Flutter project.
+Hey hey, this is our main app. If you guys want to work on a feature, you guys can create a branch for it. Then you can PR it so that I can approve it.
+
+Thanks!
 
 ## Getting Started
 
