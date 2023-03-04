@@ -3,11 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:ui/categoryPage/chickenpage.dart';
 import 'package:ui/categorypage.dart';
-import 'package:ui/fridgepage.dart';
 import 'package:ui/homepage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:ui/searchpage.dart';
 import 'package:ui/views/onboarding_page.dart';
+import 'filteringpage.dart';
 import 'firebase_options.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
@@ -39,7 +39,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   int _selectedIndex = 0;
 
-  final List<Widget> _pages = const [HomePage(), SearchPage(), FridgePage()];
+  final List<Widget> _pages = const [HomePage(), SearchPage(), FilterPage()];
 
   TextStyle optionStyle =
       const TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -88,7 +88,7 @@ class _MyAppState extends State<MyApp> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.food_bank),
-              label: 'Fridge',
+              label: 'Filter',
             ),
           ],
           currentIndex: _selectedIndex,
