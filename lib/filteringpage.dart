@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:ui/resultPage.dart';
 
 import 'categorypage.dart';
 
@@ -864,7 +865,14 @@ class _FilterPageState extends State<FilterPage> {
               ),
               // Find recipe button
               ElevatedButton(
-                onPressed: (() {}),
+                onPressed: (() {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ResultPage(),
+                    ),
+                  );
+                }),
                 style: ButtonStyle(
                   minimumSize: MaterialStateProperty.all(const Size(150, 50)),
                 ),
