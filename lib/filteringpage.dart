@@ -54,14 +54,7 @@ class _FilterPageState extends State<FilterPage> {
                     child: Column(),
                   ),
                   TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const CategoryPage(),
-                        ),
-                      );
-                    },
+                    onPressed: () {},
                     child: const Text('required'),
                   ),
                 ],
@@ -557,14 +550,7 @@ class _FilterPageState extends State<FilterPage> {
                     child: Column(),
                   ),
                   TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const CategoryPage(),
-                        ),
-                      );
-                    },
+                    onPressed: () {},
                     child: const Text('optional'),
                   ),
                 ],
@@ -831,14 +817,7 @@ class _FilterPageState extends State<FilterPage> {
                     child: Column(),
                   ),
                   TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const CategoryPage(),
-                        ),
-                      );
-                    },
+                    onPressed: () {},
                     child: const Text('optional'),
                   ),
                 ],

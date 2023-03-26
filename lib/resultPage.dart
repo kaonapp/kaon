@@ -56,7 +56,7 @@ class _ResultPageState extends State<ResultPage> {
               Row(
                 children: const [
                   Text(
-                    'Diet Option: Diabetic',
+                    'Health Option: Diabetic',
                     style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
@@ -81,7 +81,7 @@ class _ResultPageState extends State<ResultPage> {
                 ],
               ),
               const SizedBox(
-                height: 10,
+                height: 5,
               ),
               Center(
                 child: Wrap(
@@ -98,6 +98,10 @@ class _ResultPageState extends State<ResultPage> {
                   }).toList(),
                 ),
               ),
+              const SizedBox(
+                height: 5,
+              ),
+              //list all recommended recipe through ListView Builder
               ListView(
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
