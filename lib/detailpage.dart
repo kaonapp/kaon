@@ -26,9 +26,12 @@ class _DetailPageState extends State<DetailPage> {
     super.initState();
 
     String url = widget.documentSnapshot['vidLink'];
-    String vidUrl = YoutubePlayer.convertUrlToId(url)!;
+    String? vidUrl = YoutubePlayer.convertUrlToId(url);
     controller = YoutubePlayerController(
-      initialVideoId: vidUrl,
+      initialVideoId: vidUrl.toString(),
+      flags: const YoutubePlayerFlags(
+        autoPlay: false,
+      ),
     );
   }
 
@@ -97,7 +100,7 @@ class _DetailPageState extends State<DetailPage> {
                     children: [
                       Center(
                         child: Text(
-                          widget.documentSnapshot['name'] + ' ' + videoId,
+                          widget.documentSnapshot['name'],
                           style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
