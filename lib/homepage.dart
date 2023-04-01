@@ -18,6 +18,7 @@ import 'dietPage/diabeticpage.dart';
 import 'dietPage/standardpage.dart';
 import 'dietPage/veganpage.dart';
 import 'dietPage/weightpage.dart';
+import 'lists/list_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -31,33 +32,6 @@ class _HomePageState extends State<HomePage> {
   final CollectionReference _dishes =
       FirebaseFirestore.instance.collection('dishes');
 
-  // list of health option
-  final List<String> healthList = [
-    'Standard',
-    'Weight-reduction',
-    'Arthritis',
-    'Diabetic',
-    'Vegan',
-  ];
-
-// list of health option images/banner
-  final List<String> healthImages = [
-    'assets/beef.jpg',
-    'assets/Chicken.jpg',
-    'assets/dessert.jpg',
-    'assets/soup.jpg',
-    'assets/diet.png',
-  ];
-
-  // list of health option pages
-  final List healthPages = const [
-    StandardPage(),
-    WeightPage(),
-    ArthritisPage(),
-    DiabeticPage(),
-    VeganPage(),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,9 +41,9 @@ class _HomePageState extends State<HomePage> {
         leading: const Padding(
           padding: EdgeInsets.all(8.0),
           child: CircleAvatar(
-              //kaon logo here
-              //backgroundImage: AssetImage('assets/images/kaonlogo.png'),
-              ),
+            //kaon logo here
+            backgroundImage: AssetImage('assets/splash.png'),
+          ),
         ),
         actions: [
           IconButton(
