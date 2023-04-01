@@ -70,7 +70,7 @@ class _EggPageState extends State<EggPage> {
                 stream: _dishes
                     .orderBy('name', descending: false)
                     .where("category", isEqualTo: "Egg")
-                    .snapshots(), //connects to DB //build connection for Chicken
+                    .snapshots(), //connects to DB //build connection
                 builder:
                     (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
                   if (streamSnapshot.hasData) {

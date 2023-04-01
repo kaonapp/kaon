@@ -106,7 +106,7 @@ class _FishPageState extends State<FishPage> {
                     .orderBy('name', descending: false)
                     .where("category", isEqualTo: "Fish")
                     .where('diet', arrayContains: _selectedDiet)
-                    .snapshots(), //connects to DB //build connection for Chicken
+                    .snapshots(), //connects to DB //build connection
                 builder:
                     (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
                   if (streamSnapshot.hasData) {
