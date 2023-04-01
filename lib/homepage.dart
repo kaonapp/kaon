@@ -31,790 +31,895 @@ class _HomePageState extends State<HomePage> {
   final CollectionReference _dishes =
       FirebaseFirestore.instance.collection('dishes');
 
+  // list of health option
+  final List<String> healthList = [
+    'Standard',
+    'Weight-reduction',
+    'Arthritis',
+    'Diabetic',
+    'Vegan',
+  ];
+
+// list of health option images/banner
+  final List<String> healthImages = [
+    'assets/beef.jpg',
+    'assets/Chicken.jpg',
+    'assets/dessert.jpg',
+    'assets/soup.jpg',
+    'assets/diet.png',
+  ];
+
+  // list of health option pages
+  final List healthPages = const [
+    StandardPage(),
+    WeightPage(),
+    ArthritisPage(),
+    DiabeticPage(),
+    VeganPage(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Kaon!',
-          style: TextStyle(
-            fontSize: 35,
-            fontWeight: FontWeight.bold,
-            fontStyle: FontStyle.italic,
-          ),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: CircleAvatar(
+              //kaon logo here
+              //backgroundImage: AssetImage('assets/images/kaonlogo.png'),
+              ),
         ),
-        // actions: [
-        //   IconButton(
-        //     onPressed: () {},
-        //     icon: const Icon(Icons.filter_alt),
-        //   ),
-        // ],
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.only(
-            top: 20,
-            left: 25,
-            right: 25,
-            bottom: 15,
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.kitchen),
+            color: Colors.black,
           ),
+        ],
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  const Text(
-                    'Categories',
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.normal,
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(),
-                  ),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const CategoryPage(),
-                          ),
-                        );
-                      },
-                      child: const Text('view all >'))
-                ],
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              //input stream builder categories in listview below
+// Banner image
               Container(
-                width: double.infinity,
-                height: 100.0,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: <Widget>[
-                    //Chicken
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                        image: DecorationImage(
-                          image: const AssetImage(
-                            'assets/Chicken.jpg',
-                          ),
-                          fit: BoxFit.fill,
-                          colorFilter: ColorFilter.mode(
-                              Colors.grey.withOpacity(0.3), BlendMode.dstATop),
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ChickenPage(),
-                            ),
-                          );
-                        },
-                        child: const Text(
-                          'Chicken',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
-                    ),
+                margin: const EdgeInsets.all(12.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(30.0),
+                  child: const Image(
+                    image: AssetImage('assets/researching.png'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
 
-                    const SizedBox(
-                      width: 15,
+// Search button -----
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  'What would you like to eat?',
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 20),
+              Container(
+                height: 50,
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const TextField(
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    prefixIcon: Icon(Icons.search),
+                    hintText: 'Search for food or cuisine',
+                    hintStyle: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 16,
                     ),
-                    //pork container
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        image: DecorationImage(
-                          image: const AssetImage(
-                            'assets/pork.jpg',
-                          ),
-                          fit: BoxFit.fill,
-                          colorFilter: ColorFilter.mode(
-                              Colors.grey.withOpacity(0.3), BlendMode.dstATop),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const PorkPage(),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              // Health option section
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  'Health Options',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              // Health option section container
+              Container(
+                height: 150,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: healthList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          GestureDetector(
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => healthPages[index],
+                              ),
                             ),
-                          );
-                        },
-                        child: const Text(
-                          'Pork',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //vegetable container
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        image: DecorationImage(
-                          image: const AssetImage(
-                            'assets/vegetable.jpg',
-                          ),
-                          fit: BoxFit.fill,
-                          colorFilter: ColorFilter.mode(
-                              Colors.grey.withOpacity(0.5), BlendMode.dstATop),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const VegetablePage(),
+                            child: Container(
+                              height: 100,
+                              width: 250,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                image: DecorationImage(
+                                  image: AssetImage(healthImages[index]),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                             ),
-                          );
-                        },
-                        child: const Text(
-                          'Vegetable',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
                           ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //dessert container
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        image: DecorationImage(
-                          image: const AssetImage(
-                            'assets/dessert.jpg',
-                          ),
-                          fit: BoxFit.fill,
-                          colorFilter: ColorFilter.mode(
-                              Colors.grey.withOpacity(0.5), BlendMode.dstATop),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const DessertPage(),
+                          const SizedBox(height: 10),
+                          Text(
+                            healthList[index],
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
                             ),
-                          );
-                        },
-                        child: const Text(
-                          'Dessert',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
                           ),
-                        ),
+                        ],
                       ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //egg container
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        image: DecorationImage(
-                          image: const AssetImage(
-                            'assets/egg.jpg',
-                          ),
-                          fit: BoxFit.fill,
-                          colorFilter: ColorFilter.mode(
-                              Colors.grey.withOpacity(0.5), BlendMode.dstATop),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const EggPage(),
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(height: 20),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  'Categories',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Container(
+                height: 150,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 10,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 100,
+                            width: 100,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              image: const DecorationImage(
+                                image: AssetImage('assets/comingSoon.png'),
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                          );
-                        },
-                        child: const Text(
-                          'Egg',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
                           ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //beef container
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        image: DecorationImage(
-                          image: const AssetImage(
-                            'assets/beef.jpg',
-                          ),
-                          fit: BoxFit.fill,
-                          colorFilter: ColorFilter.mode(
-                              Colors.grey.withOpacity(0.5), BlendMode.dstATop),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const BeefPage(),
+                          const SizedBox(height: 10),
+                          const Text(
+                            'Category Name',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
                             ),
-                          );
-                        },
-                        child: const Text(
-                          'Beef',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
                           ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+
+              // chicken section
+              const SizedBox(height: 30),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Chicken ',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //       builder: (context) => ViewAllResultPage()),
+                        // );
+                      },
+                      child: Text(
+                        'View All',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey.withOpacity(
+                              0.7), // Set the color to grey with an opacity of 0.7
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              //browse by diet
-              Row(
-                children: [
-                  const Text(
-                    'Browse by diet',
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.normal,
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(),
-                  ),
-                  //TextButton(onPressed: () {}, child: const Text('view all >'))
-                ],
-              ),
-              const SizedBox(
-                height: 15,
-              ),
+              const SizedBox(height: 10),
               Container(
-                width: double.infinity,
-                height: 100.0,
-                child: ListView(
+                height: 200,
+                child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  children: <Widget>[
-                    //Standard diet
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const StandardPage(),
+                  itemCount: 5,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Card(
+                            elevation: 5,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                          );
-                        },
-                        child: const Text(
-                          'Standard',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
+                            child: Container(
+                              height: 150,
+                              width: 250,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                // image: const DecorationImage(
+                                //   image: AssetImage('assets/comingSoon.png'),
+                                //   fit: BoxFit.cover,
+                                // ),
+                              ),
+                            ),
                           ),
-                        ),
+                          const SizedBox(height: 10),
+                          const Text(
+                            'Dish Name',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
+                    );
+                  },
+                ),
+              ),
 
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //Diabetic container
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const DiabeticPage(),
-                            ),
-                          );
-                        },
-                        child: const Text(
-                          'Diabetic',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
+              // pork section
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Pork',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //Arthritis container
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        'View All',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey.withOpacity(
+                              0.7), // Set the color to grey with an opacity of 0.7
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ArthritisPage(),
-                            ),
-                          );
-                        },
-                        child: const Text(
-                          'Arthritis',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //Weight-reduction container
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const WeightPage(),
-                            ),
-                          );
-                        },
-                        child: const Text(
-                          'Weight-reduction',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //Vegan container
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const VeganPage(),
-                            ),
-                          );
-                        },
-                        child: const Text(
-                          'Vegan',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 15,
                     ),
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 15,
-              ),
-              //Dessert
-              Row(
-                children: [
-                  const Text(
-                    'Dessert',
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.normal,
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(),
-                  ),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const DessertPage(),
-                          ),
-                        );
-                      },
-                      child: const Text('view all >'))
-                ],
-              ),
-              const SizedBox(
-                height: 15,
-              ),
+              const SizedBox(height: 10),
               Container(
-                width: double.infinity,
-                height: 100.0,
-                child: StreamBuilder<QuerySnapshot>(
-                  stream: _dishes
-                      .orderBy('name', descending: false)
-                      .where('category', isEqualTo: "Dessert")
-                      .snapshots(), //connects to DB //build connection
-                  builder:
-                      (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
-                    if (streamSnapshot.hasData) {
-                      return ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: streamSnapshot.data!.docs.length,
-                        itemBuilder: (context, index) {
-                          final DocumentSnapshot documentSnapshot =
-                              streamSnapshot.data!.docs[index];
-
-                          return //Dessert diet
-                              Container(
-                            margin: const EdgeInsets.all(5),
+                height: 200,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 5,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 150,
+                            width: 250,
                             decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                bottomRight: Radius.circular(10),
-                                bottomLeft: Radius.circular(10),
-                                topRight: Radius.circular(10),
-                              ),
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 2.0,
-                              ),
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                  documentSnapshot['imgUrl'],
-                                ),
-                                fit: BoxFit.fill,
-                                colorFilter: ColorFilter.mode(
-                                    Colors.grey.withOpacity(0.4),
-                                    BlendMode.dstATop),
-                              ),
+                              borderRadius: BorderRadius.circular(10),
+                              // image: const DecorationImage(
+                              //   image: AssetImage('assets/comingSoon.png'),
+                              //   fit: BoxFit.cover,
+                              // ),
                             ),
-                            width: 160.0,
-                            // color: Colors.red,
-                            child: TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => DetailPage(
-                                      documentSnapshot: documentSnapshot,
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: Center(
-                                child: Text(
-                                  documentSnapshot['name'],
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.normal,
-                                  ),
-                                ),
-                              ),
+                          ),
+                          const SizedBox(height: 10),
+                          const Text(
+                            'Dish Name',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
                             ),
-                          );
-                        },
-                      );
-                    }
-
-                    return const Center(
-                      child: CircularProgressIndicator(),
+                          ),
+                        ],
+                      ),
                     );
                   },
                 ),
               ),
-              const SizedBox(
-                height: 15,
-              ),
-              //Vegetable Row
-              Row(
-                children: [
-                  const Text(
-                    'Vegetable',
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.normal,
+
+              // beff section
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Beef',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: Column(),
-                  ),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const VegetablePage(),
-                          ),
-                        );
-                      },
-                      child: const Text('view all >'))
-                ],
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        'View All',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey.withOpacity(
+                              0.7), // Set the color to grey with an opacity of 0.7
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              const SizedBox(
-                height: 15,
-              ),
-              //Vegetable Select
+              const SizedBox(height: 10),
               Container(
-                width: double.infinity,
-                height: 100.0,
-                child: StreamBuilder<QuerySnapshot>(
-                  stream: _dishes
-                      .orderBy('name', descending: false)
-                      .where('category', isEqualTo: "Vegetable")
-                      .limit(6)
-                      .snapshots(), //connects to DB //build connection
-                  builder:
-                      (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
-                    if (streamSnapshot.hasData) {
-                      return ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: streamSnapshot.data!.docs.length,
-                        itemBuilder: (context, index) {
-                          final DocumentSnapshot documentSnapshot =
-                              streamSnapshot.data!.docs[index];
-
-                          return //vegetable diet
-                              Container(
-                            margin: const EdgeInsets.all(5),
+                height: 200,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 5,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 150,
+                            width: 250,
                             decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                bottomRight: Radius.circular(10),
-                                bottomLeft: Radius.circular(10),
-                                topRight: Radius.circular(10),
-                              ),
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                  documentSnapshot['imgUrl'],
-                                ),
-                                fit: BoxFit.fill,
-                                colorFilter: ColorFilter.mode(
-                                    Colors.grey.withOpacity(0.5),
-                                    BlendMode.dstATop),
-                              ),
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 2.0,
-                              ),
+                              borderRadius: BorderRadius.circular(10),
+                              // image: const DecorationImage(
+                              //   image: AssetImage('assets/comingSoon.png'),
+                              //   fit: BoxFit.cover,
+                              // ),
                             ),
-                            width: 160.0,
-                            // color: Colors.red,
-                            child: TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => DetailPage(
-                                      documentSnapshot: documentSnapshot,
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: Center(
-                                child: Text(
-                                  documentSnapshot['name'],
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.normal,
-                                  ),
-                                ),
-                              ),
+                          ),
+                          const SizedBox(height: 10),
+                          const Text(
+                            'Dish Name',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
                             ),
-                          );
-                        },
-                      );
-                    }
-
-                    return const Center(
-                      child: CircularProgressIndicator(),
+                          ),
+                        ],
+                      ),
                     );
                   },
                 ),
               ),
+
+              // fish section
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Fish',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        'View All',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey.withOpacity(
+                              0.7), // Set the color to grey with an opacity of 0.7
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              Container(
+                height: 200,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 5,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 150,
+                            width: 250,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              // image: const DecorationImage(
+                              //   image: AssetImage('assets/comingSoon.png'),
+                              //   fit: BoxFit.cover,
+                              // ),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          const Text(
+                            'Dish Name',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+
+              // seafood section
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Seafood',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        'View All',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey.withOpacity(
+                              0.7), // Set the color to grey with an opacity of 0.7
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              Container(
+                height: 200,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 5,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 150,
+                            width: 250,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              // image: const DecorationImage(
+                              //   image: AssetImage('assets/comingSoon.png'),
+                              //   fit: BoxFit.cover,
+                              // ),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          const Text(
+                            'Dish Name',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+
+              // egg section
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Egg',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        'View All',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey.withOpacity(
+                              0.7), // Set the color to grey with an opacity of 0.7
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              Container(
+                height: 200,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 5,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 150,
+                            width: 250,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              // image: const DecorationImage(
+                              //   image: AssetImage('assets/comingSoon.png'),
+                              //   fit: BoxFit.cover,
+                              // ),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          const Text(
+                            'Dish Name',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+
+              // rice and alt section
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Rice and Alternatives',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        'View All',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey.withOpacity(
+                              0.7), // Set the color to grey with an opacity of 0.7
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              Container(
+                height: 200,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 5,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 150,
+                            width: 250,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              // image: const DecorationImage(
+                              //   image: AssetImage('assets/comingSoon.png'),
+                              //   fit: BoxFit.cover,
+                              // ),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          const Text(
+                            'Dish Name',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+
+              // soup section
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Soup',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        'View All',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey.withOpacity(
+                              0.7), // Set the color to grey with an opacity of 0.7
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              Container(
+                height: 200,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 5,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 150,
+                            width: 250,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              image: const DecorationImage(
+                                image: AssetImage('assets/comingSoon.png'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          const Text(
+                            'Dish Name',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+
+              // dessert section
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Dessert',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        'View All',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey.withOpacity(
+                              0.7), // Set the color to grey with an opacity of 0.7
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              Container(
+                height: 200,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 5,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 150,
+                            width: 250,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              image: const DecorationImage(
+                                image: AssetImage('assets/comingSoon.png'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          const Text(
+                            'Dish Name',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+
+              // vegetable section
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Vegetables',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        'View All',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey.withOpacity(
+                              0.7), // Set the color to grey with an opacity of 0.7
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              Container(
+                height: 200,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 5,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 150,
+                            width: 250,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              image: const DecorationImage(
+                                image: AssetImage('assets/comingSoon.png'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          const Text(
+                            'Dish Name',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+
+              //footer
+              const SizedBox(height: 30),
             ],
           ),
         ),
