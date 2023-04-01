@@ -35,6 +35,30 @@ class _HomePageState extends State<HomePage> {
   final CollectionReference _dishes =
       FirebaseFirestore.instance.collection('dishes');
 
+  // Scroll to top controller
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_scrollListener);
+  }
+
+  _scrollListener() {
+    if (_scrollController.offset >= 100) {
+      // change 100 to your desired offset
+      setState(() {
+        _showFloatingButton = true;
+      });
+    } else {
+      setState(() {
+        _showFloatingButton = false;
+      });
+    }
+  }
+
+  bool _showFloatingButton = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,6 +82,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
+          controller: _scrollController,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -1348,6 +1373,16 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+      floatingActionButton: _showFloatingButton
+          ? FloatingActionButton(
+              onPressed: () {
+                _scrollController.animateTo(0,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInOut);
+              },
+              child: const Icon(Icons.arrow_upward),
+            )
+          : null,
     );
   }
 }

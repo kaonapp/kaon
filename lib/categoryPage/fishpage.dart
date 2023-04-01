@@ -14,6 +14,35 @@ class _FishPageState extends State<FishPage> {
   final CollectionReference _dishes =
       FirebaseFirestore.instance.collection('dishes');
 
+// Scroll to top controller
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_scrollListener);
+  }
+
+  _scrollListener() {
+    if (_scrollController.offset >= 100) {
+      // change 100 to your desired offset
+      setState(() {
+        _showFloatingButton = true;
+      });
+    } else {
+      setState(() {
+        _showFloatingButton = false;
+      });
+    }
+  }
+
+  bool _showFloatingButton = false;
+
+  void displayTotalNumberOfDocuments() async {
+    QuerySnapshot querySnapshot = await _dishes.get();
+    int totalDocuments = querySnapshot.size;
+  }
+
   //chips for filtering Fish diet options
   String? _selectedDiet = 'Standard';
   final List<String> _dietOptions = const [
@@ -27,14 +56,13 @@ class _FishPageState extends State<FishPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        //category name
         title: const Text(
           'Fish',
-          style: TextStyle(
-            fontSize: 35,
-            fontWeight: FontWeight.bold,
-            fontStyle: FontStyle.normal,
-          ),
+          style: TextStyle(color: Colors.black),
         ),
+        backgroundColor: Colors.white,
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: Container(
         padding: const EdgeInsets.only(
@@ -49,6 +77,7 @@ class _FishPageState extends State<FishPage> {
             Center(
               child: Wrap(
                 runAlignment: WrapAlignment.spaceEvenly,
+                clipBehavior: Clip.antiAlias,
                 spacing: 2.0,
                 children: _dietOptions.map((option) {
                   return FilterChip(
@@ -66,29 +95,32 @@ class _FishPageState extends State<FishPage> {
             const SizedBox(
               height: 10,
             ),
-            Text("Selected diet: $_selectedDiet"),
+            Text("Selected diet: $_selectedDiet)"),
             const SizedBox(
               height: 10,
             ),
-            //Display Fish recipe
+            //Display chicken recipe
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
                 stream: _dishes
                     .orderBy('name', descending: false)
-                    .where('category', isEqualTo: "Fish")
+                    .where("category", isEqualTo: "Fish")
                     .where('diet', arrayContains: _selectedDiet)
-                    .snapshots(), //connects to DB //build connection
+                    .snapshots(), //connects to DB //build connection for Chicken
                 builder:
                     (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
                   if (streamSnapshot.hasData) {
                     return ListView.builder(
+                      controller: _scrollController,
+                      shrinkWrap: true,
+                      //physics: const NeverScrollableScrollPhysics(),
                       itemCount: streamSnapshot.data!.docs.length,
-                      itemBuilder: (context, index) {
+                      itemBuilder: (BuildContext context, int index) {
                         final DocumentSnapshot documentSnapshot =
                             streamSnapshot.data!.docs[index];
-
-                        return Card(
-                          margin: const EdgeInsets.all(10),
+                        return Container(
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 10.0),
                           child: ListTile(
                             onTap: () {
                               Navigator.push(
@@ -100,52 +132,36 @@ class _FishPageState extends State<FishPage> {
                                 ),
                               );
                             },
-                            // ignore: prefer_interpolation_to_compose_strings
-                            title: Text(
-                                '${index + 1}. ' + documentSnapshot['name']),
-                            subtitle: Text(
-                              documentSnapshot['category'] +
-                                  ' / ' +
-                                  documentSnapshot['cookTime'].toString() +
-                                  ' minutes',
+                            leading: Container(
+                              height: 80,
+                              width: 80,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                image: DecorationImage(
+                                  image:
+                                      NetworkImage(documentSnapshot['imgUrl']),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                             ),
-                            // trailing: SizedBox(
-                            //   width: 50,
-                            //   child: Row(
-                            //     // ignore: prefer_const_literals_to_create_immutables
-                            //     children: [
-                            //       ConstrainedBox(
-                            //         constraints: const BoxConstraints(
-                            //           minWidth: 40,
-                            //           minHeight: 44,
-                            //           maxWidth: 50,
-                            //           maxHeight: 64,
-                            //         ),
-                            //         child: Image.network(
-                            //           documentSnapshot['imgUrl'],
-                            //         ),
-                            //       ),
-                            //       // IconButton(
-                            //       //   color: Colors.greenAccent,
-                            //       //   icon: const Icon(Icons.remove_red_eye_rounded),
-                            //       //   onPressed: () => Navigator.push(
-                            //       //     context,
-                            //       //     MaterialPageRoute(
-                            //       //       builder: (context) => DetailPage(
-                            //       //         documentSnapshot: documentSnapshot,
-                            //       //       ),
-                            //       //     ),
-                            //       //   ),
-                            //       // ),
-                            //     ],
-                            //   ),
-                            // ),
+                            title: Text(
+                              documentSnapshot['name'],
+                              style: const TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            subtitle: Text(
+                              documentSnapshot['category'],
+                              style: const TextStyle(
+                                fontSize: 16.0,
+                              ),
+                            ),
                           ),
                         );
                       },
                     );
                   }
-
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
@@ -155,6 +171,16 @@ class _FishPageState extends State<FishPage> {
           ],
         ),
       ),
+      floatingActionButton: _showFloatingButton
+          ? FloatingActionButton(
+              onPressed: () {
+                _scrollController.animateTo(0,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInOut);
+              },
+              child: const Icon(Icons.arrow_upward),
+            )
+          : null,
     );
   }
 }
