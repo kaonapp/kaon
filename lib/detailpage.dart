@@ -37,12 +37,6 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    //video link convert to id
-    String? videoConvertId =
-        YoutubePlayer.convertUrlToId(widget.documentSnapshot['vidLink']);
-
-    String videoId = videoConvertId.toString();
-
     //for listing ingredient in line breaks
     String ingredientList = widget.documentSnapshot['ingredient']
         .map((element) => element.toString() + '\n\n')
@@ -62,16 +56,18 @@ class _DetailPageState extends State<DetailPage> {
       ),
       builder: (context, player) => Scaffold(
         appBar: AppBar(
-            // title: Text(
-            //   widget.documentSnapshot['name'],
-            //   style: const TextStyle(
-            //     fontSize: 25,
-            //     fontWeight: FontWeight.bold,
-            //     fontStyle: FontStyle.normal,
-            //   ),
-            // ),
-            // actions: const [],
-            ),
+          backgroundColor: Colors.white,
+          iconTheme: const IconThemeData(color: Colors.black),
+          // title: Text(
+          //   widget.documentSnapshot['name'],
+          //   style: const TextStyle(
+          //     fontSize: 25,
+          //     fontWeight: FontWeight.bold,
+          //     fontStyle: FontStyle.normal,
+          //   ),
+          // ),
+          // actions: const [],
+        ),
         body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
