@@ -156,9 +156,10 @@ class _DetailPageState extends State<DetailPage> {
                               ),
                             ),
                             tilePadding: EdgeInsets.zero,
-                            initiallyExpanded: false,
+                            initiallyExpanded: true,
                             children: [
                               ListView(
+                                physics: const NeverScrollableScrollPhysics(),
                                 padding: const EdgeInsets.only(left: 20.0),
                                 shrinkWrap: true,
                                 children: [
@@ -185,6 +186,7 @@ class _DetailPageState extends State<DetailPage> {
                             color: Colors.grey[300],
                             child: Center(
                               child: ListView(
+                                physics: const NeverScrollableScrollPhysics(),
                                 children: [player],
                               ),
                             ),
