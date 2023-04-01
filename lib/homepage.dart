@@ -4,7 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ui/categoryPage/dessertpage.dart';
 import 'package:ui/categoryPage/eggpage.dart';
+import 'package:ui/categoryPage/fishpage.dart';
 import 'package:ui/categoryPage/porkpage.dart';
+import 'package:ui/categoryPage/ricepage.dart';
+import 'package:ui/categoryPage/seafoodpage.dart';
 import 'package:ui/categoryPage/souppage.dart';
 import 'package:ui/categoryPage/vegetablepage.dart';
 import 'package:ui/categorypage.dart';
@@ -248,7 +251,8 @@ class _HomePageState extends State<HomePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const ChickenPage()),
+                            builder: (context) => const ChickenPage(),
+                          ),
                         );
                       },
                       child: Text(
@@ -354,7 +358,14 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const PorkPage(),
+                          ),
+                        );
+                      },
                       child: Text(
                         'View All',
                         style: TextStyle(
@@ -458,7 +469,14 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const BeefPage(),
+                          ),
+                        );
+                      },
                       child: Text(
                         'View All',
                         style: TextStyle(
@@ -562,7 +580,14 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const FishPage(),
+                          ),
+                        );
+                      },
                       child: Text(
                         'View All',
                         style: TextStyle(
@@ -666,7 +691,14 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SeafoodPage(),
+                          ),
+                        );
+                      },
                       child: Text(
                         'View All',
                         style: TextStyle(
@@ -770,7 +802,14 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const EggPage(),
+                          ),
+                        );
+                      },
                       child: Text(
                         'View All',
                         style: TextStyle(
@@ -874,7 +913,14 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const RicePage(),
+                          ),
+                        );
+                      },
                       child: Text(
                         'View All',
                         style: TextStyle(
@@ -978,7 +1024,14 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SoupPage(),
+                          ),
+                        );
+                      },
                       child: Text(
                         'View All',
                         style: TextStyle(
@@ -1082,7 +1135,14 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const DessertPage(),
+                          ),
+                        );
+                      },
                       child: Text(
                         'View All',
                         style: TextStyle(
@@ -1186,7 +1246,14 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const VegetablePage(),
+                          ),
+                        );
+                      },
                       child: Text(
                         'View All',
                         style: TextStyle(
