@@ -18,95 +18,96 @@ class _WeightPageState extends State<WeightPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        //category name
         title: const Text(
           'Weight-reduction',
-          style: TextStyle(
-            fontSize: 35,
-            fontWeight: FontWeight.bold,
-            fontStyle: FontStyle.normal,
-          ),
+          style: TextStyle(color: Colors.black),
         ),
+        backgroundColor: Colors.white,
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
-      body: Container(
-        padding: const EdgeInsets.only(
-          top: 20,
-          left: 10,
-          right: 10,
-          bottom: 5,
-        ),
-        child: StreamBuilder<QuerySnapshot>(
-          stream: _dishes
-              .orderBy('name', descending: false)
-              .where('diet', arrayContains: "Weight-reduction")
-              .snapshots(), //connects to DB //build connection
-          builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
-            if (streamSnapshot.hasData) {
-              return ListView.builder(
-                itemCount: streamSnapshot.data!.docs.length,
-                itemBuilder: (context, index) {
-                  final DocumentSnapshot documentSnapshot =
-                      streamSnapshot.data!.docs[index];
-
-                  return Card(
-                    margin: const EdgeInsets.all(10),
-                    child: ListTile(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DetailPage(
-                              documentSnapshot: documentSnapshot,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              margin: const EdgeInsets.all(12.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(30.0),
+                // child: Image(
+                //   image: AssetImage('assets/images/banner.png'),
+                //   fit: BoxFit.cover,
+                // ),
+              ),
+            ),
+            Container(
+              height: 650,
+              child: StreamBuilder<QuerySnapshot>(
+                stream: _dishes
+                    .orderBy('name', descending: false)
+                    .where("diet", arrayContains: "Weight-reduction")
+                    .snapshots(), //connects to DB //build connection
+                builder:
+                    (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                  if (streamSnapshot.hasData) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      //physics: const NeverScrollableScrollPhysics(),
+                      itemCount: streamSnapshot.data!.docs.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final DocumentSnapshot documentSnapshot =
+                            streamSnapshot.data!.docs[index];
+                        return Container(
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 10.0),
+                          child: ListTile(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DetailPage(
+                                    documentSnapshot: documentSnapshot,
+                                  ),
+                                ),
+                              );
+                            },
+                            leading: Container(
+                              height: 80,
+                              width: 80,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
+                                image: DecorationImage(
+                                  image:
+                                      NetworkImage(documentSnapshot['imgUrl']),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            title: Text(
+                              documentSnapshot['name'],
+                              style: const TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            subtitle: Text(
+                              documentSnapshot['category'],
+                              style: const TextStyle(
+                                fontSize: 16.0,
+                              ),
                             ),
                           ),
                         );
                       },
-                      // ignore: prefer_interpolation_to_compose_strings
-                      title: Text('${index + 1}. ' + documentSnapshot['name']),
-                      subtitle: Text(documentSnapshot['category'] +
-                          ' / ' +
-                          documentSnapshot['cookTime'].toString() +
-                          ' minutes'),
-                      // trailing: SizedBox(
-                      //   width: 50,
-                      //   child: Row(
-                      //     // ignore: prefer_const_literals_to_create_immutables
-                      //     children: [
-                      //       ConstrainedBox(
-                      //         constraints: const BoxConstraints(
-                      //           minWidth: 40,
-                      //           minHeight: 44,
-                      //           maxWidth: 50,
-                      //           maxHeight: 64,
-                      //         ),
-                      //         child: Image.network(
-                      //           documentSnapshot['imgUrl'],
-                      //         ),
-                      //       ),
-                      //       // IconButton(
-                      //       //   color: Colors.greenAccent,
-                      //       //   icon: const Icon(Icons.remove_red_eye_rounded),
-                      //       //   onPressed: () => Navigator.push(
-                      //       //     context,
-                      //       //     MaterialPageRoute(
-                      //       //       builder: (context) => DetailPage(
-                      //       //         documentSnapshot: documentSnapshot,
-                      //       //       ),
-                      //       //     ),
-                      //       //   ),
-                      //       // ),
-                      //     ],
-                      //   ),
-                      // ),
-                    ),
+                    );
+                  }
+                  return const Center(
+                    child: CircularProgressIndicator(),
                   );
                 },
-              );
-            }
-
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          },
+              ),
+            ),
+          ],
         ),
       ),
     );
