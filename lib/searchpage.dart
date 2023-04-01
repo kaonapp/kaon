@@ -175,10 +175,10 @@ class _SearchPageState extends State<SearchPage> {
           ? FloatingActionButton(
               onPressed: () {
                 _scrollController.animateTo(0,
-                    duration: Duration(milliseconds: 500),
+                    duration: const Duration(milliseconds: 500),
                     curve: Curves.easeInOut);
               },
-              child: Icon(Icons.arrow_upward),
+              child: const Icon(Icons.arrow_upward),
             )
           : null,
     );

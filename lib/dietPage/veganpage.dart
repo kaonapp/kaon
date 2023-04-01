@@ -14,6 +14,30 @@ class _VeganPageState extends State<VeganPage> {
   // reference for collection/table in db (REQUIRED!)
   final CollectionReference _dishes =
       FirebaseFirestore.instance.collection('dishes');
+
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_scrollListener);
+  }
+
+  _scrollListener() {
+    if (_scrollController.offset >= 100) {
+      // change 100 to your desired offset
+      setState(() {
+        _showFloatingButton = true;
+      });
+    } else {
+      setState(() {
+        _showFloatingButton = false;
+      });
+    }
+  }
+
+  bool _showFloatingButton = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +64,7 @@ class _VeganPageState extends State<VeganPage> {
                 // ),
               ),
             ),
-            Container(
+            SizedBox(
               height: 650,
               child: StreamBuilder<QuerySnapshot>(
                 stream: _dishes
@@ -51,6 +75,7 @@ class _VeganPageState extends State<VeganPage> {
                     (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
                   if (streamSnapshot.hasData) {
                     return ListView.builder(
+                      controller: _scrollController,
                       shrinkWrap: true,
                       //physics: const NeverScrollableScrollPhysics(),
                       itemCount: streamSnapshot.data!.docs.length,
@@ -110,6 +135,16 @@ class _VeganPageState extends State<VeganPage> {
           ],
         ),
       ),
+      floatingActionButton: _showFloatingButton
+          ? FloatingActionButton(
+              onPressed: () {
+                _scrollController.animateTo(0,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInOut);
+              },
+              child: const Icon(Icons.arrow_upward),
+            )
+          : null,
     );
   }
 }
