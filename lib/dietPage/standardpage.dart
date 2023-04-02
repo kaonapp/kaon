@@ -100,7 +100,8 @@ class _StandardPageState extends State<StandardPage> {
                   stream: _dishes
                       .orderBy('name', descending: false)
                       .where("diet", arrayContains: "Standard")
-                      .snapshots(), //connects to DB //build connection for Chicken
+                      .snapshots(), //connects to DB //build connection
+
                   builder:
                       (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
                     if (streamSnapshot.hasData) {
@@ -113,42 +114,74 @@ class _StandardPageState extends State<StandardPage> {
                           final DocumentSnapshot documentSnapshot =
                               streamSnapshot.data!.docs[index];
                           return Container(
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.1),
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  offset: const Offset(
+                                      0, 3), // changes position of shadow
+                                ),
+                              ],
+                            ),
                             margin: const EdgeInsets.symmetric(
-                                vertical: 10.0, horizontal: 10.0),
-                            child: ListTile(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => DetailPage(
-                                      documentSnapshot: documentSnapshot,
+                              vertical: 2.0,
+                              horizontal: 10.0,
+                            ),
+                            child: Card(
+                              elevation: 2,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              shadowColor: Colors.grey,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 15.0,
+                                  horizontal: 10.0,
+                                ),
+                                child: Column(
+                                  children: [
+                                    ListTile(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => DetailPage(
+                                              documentSnapshot:
+                                                  documentSnapshot,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      leading: Container(
+                                        height: 100,
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                          image: DecorationImage(
+                                            image: NetworkImage(
+                                                documentSnapshot['imgUrl']),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                      title: Text(
+                                        documentSnapshot['name'],
+                                        style: const TextStyle(
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      subtitle: Text(
+                                        documentSnapshot['category'],
+                                        style: const TextStyle(
+                                          fontSize: 16.0,
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                );
-                              },
-                              leading: Container(
-                                height: 80,
-                                width: 80,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                        documentSnapshot['imgUrl']),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                              title: Text(
-                                documentSnapshot['name'],
-                                style: const TextStyle(
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              subtitle: Text(
-                                documentSnapshot['category'],
-                                style: const TextStyle(
-                                  fontSize: 16.0,
+                                  ],
                                 ),
                               ),
                             ),

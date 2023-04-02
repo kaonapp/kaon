@@ -131,8 +131,21 @@ class _SearchPageState extends State<SearchPage> {
                         final DocumentSnapshot documentSnapshot =
                             streamSnapshot.data!.docs[index];
                         return Container(
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.1),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: const Offset(
+                                    0, 3), // changes position of shadow
+                              ),
+                            ],
+                          ),
                           margin: const EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 10.0),
+                            vertical: 2.0,
+                            horizontal: 10.0,
+                          ),
                           child: Card(
                             elevation: 2,
                             shape: RoundedRectangleBorder(
