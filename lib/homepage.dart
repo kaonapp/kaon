@@ -237,8 +237,8 @@ class _HomePageState extends State<HomePage> {
                               width: 100,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                image: const DecorationImage(
-                                  image: AssetImage('assets/comingSoon.png'),
+                                image: DecorationImage(
+                                  image: AssetImage(categoryImage[index]),
                                   fit: BoxFit.cover,
                                 ),
                               ),

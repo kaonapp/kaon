@@ -28,11 +28,11 @@ final List<String> healthList = [
 
 // list of health option images/banner
 final List<String> healthImages = [
-  'assets/beef.jpg',
-  'assets/Chicken.jpg',
-  'assets/dessert.jpg',
-  'assets/soup.jpg',
-  'assets/vegetable.jpg',
+  'assets/banners/health_options_banner/standard.png',
+  'assets/banners/health_options_banner/weight.png',
+  'assets/banners/health_options_banner/arthritis.png',
+  'assets/banners/health_options_banner/diabetic.png',
+  'assets/banners/health_options_banner/vegan.png',
 ];
 
 // list of health option pages
@@ -52,10 +52,24 @@ final List<String> categoryList = [
   'Fish',
   'Pork',
   'Soup',
-  'Rice and alternative',
+  'Rice and alt.',
   'Vegetable',
   'Dessert',
   'Seafood',
+];
+
+// list of category images
+const List categoryImage = [
+  'assets/banners/category_banner/chicken.jpg',
+  'assets/banners/category_banner/beef.jpg',
+  'assets/banners/category_banner/egg.jpg',
+  'assets/banners/category_banner/fish.jpg',
+  'assets/banners/category_banner/pork.jpg',
+  'assets/banners/category_banner/soup.jpg',
+  'assets/banners/category_banner/rice.jpg',
+  'assets/banners/category_banner/vegetables.jpg',
+  'assets/banners/category_banner/dessert.jpg',
+  'assets/banners/category_banner/seafood.jpg',
 ];
 
 // list of category pages
