@@ -123,40 +123,58 @@ class _SearchPageState extends State<SearchPage> {
                         return Container(
                           margin: const EdgeInsets.symmetric(
                               vertical: 10.0, horizontal: 10.0),
-                          child: ListTile(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => DetailPage(
-                                    documentSnapshot: documentSnapshot,
+                          child: Card(
+                            elevation: 2,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            shadowColor: Colors.grey,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 10.0,
+                                horizontal: 10.0,
+                              ),
+                              child: Column(
+                                children: [
+                                  ListTile(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => DetailPage(
+                                            documentSnapshot: documentSnapshot,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    leading: Container(
+                                      height: 100,
+                                      width: 100,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                              documentSnapshot['imgUrl']),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    title: Text(
+                                      documentSnapshot['name'],
+                                      style: const TextStyle(
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    subtitle: Text(
+                                      documentSnapshot['category'],
+                                      style: const TextStyle(
+                                        fontSize: 16.0,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
-                            leading: Container(
-                              height: 80,
-                              width: 80,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                image: DecorationImage(
-                                  image:
-                                      NetworkImage(documentSnapshot['imgUrl']),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            title: Text(
-                              documentSnapshot['name'],
-                              style: const TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            subtitle: Text(
-                              documentSnapshot['category'],
-                              style: const TextStyle(
-                                fontSize: 16.0,
+                                ],
                               ),
                             ),
                           ),
