@@ -83,16 +83,26 @@ class _SearchPageState extends State<SearchPage> {
               child: TextField(
                 textCapitalization: TextCapitalization.sentences,
                 onChanged: (value) {
-                  setState(() {});
+                  setState(() {
+                    _scrollController.animateTo(0,
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.ease);
+                  });
                 },
                 controller: _searchController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   border: InputBorder.none,
-                  prefixIcon: Icon(
+                  prefixIcon: const Icon(
                     Icons.search,
                   ),
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.clear),
+                    onPressed: () {
+                      _searchController.clear();
+                    },
+                  ),
                   hintText: 'Search for food or cuisine',
-                  hintStyle: TextStyle(
+                  hintStyle: const TextStyle(
                     color: Colors.grey,
                     fontSize: 16,
                   ),
