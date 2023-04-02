@@ -44,95 +44,126 @@ class _StandardPageState extends State<StandardPage> {
       appBar: AppBar(
         //category name
         title: const Text(
-          'Standard',
+          '',
           style: TextStyle(color: Colors.black),
         ),
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              margin: const EdgeInsets.all(12.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(30.0),
-                // child: Image(
-                //   image: AssetImage('assets/images/banner.png'),
-                //   fit: BoxFit.cover,
-                // ),
+        child: Container(
+          padding: const EdgeInsets.only(
+            top: 20,
+            left: 10,
+            right: 10,
+            bottom: 5,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Banner image
+              Container(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.7),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
+                ),
+                margin: const EdgeInsets.all(12.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: const Image(
+                    image: AssetImage(
+                      'assets/banners/banner_per_page/standard.jpg',
+                    ),
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
-            ),
-            SizedBox(
-              height: 650,
-              child: StreamBuilder<QuerySnapshot>(
-                stream: _dishes
-                    .orderBy('name', descending: false)
-                    .where("diet", arrayContains: "Standard")
-                    .snapshots(), //connects to DB //build connection for Chicken
-                builder:
-                    (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
-                  if (streamSnapshot.hasData) {
-                    return ListView.builder(
-                      controller: _scrollController,
-                      shrinkWrap: true,
-                      //physics: const NeverScrollableScrollPhysics(),
-                      itemCount: streamSnapshot.data!.docs.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        final DocumentSnapshot documentSnapshot =
-                            streamSnapshot.data!.docs[index];
-                        return Container(
-                          margin: const EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 10.0),
-                          child: ListTile(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => DetailPage(
-                                    documentSnapshot: documentSnapshot,
+              Container(
+                margin: const EdgeInsets.all(12.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(30.0),
+                  // child: Image(
+                  //   image: AssetImage('assets/images/banner.png'),
+                  //   fit: BoxFit.cover,
+                  // ),
+                ),
+              ),
+              SizedBox(
+                height: 650,
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: _dishes
+                      .orderBy('name', descending: false)
+                      .where("diet", arrayContains: "Standard")
+                      .snapshots(), //connects to DB //build connection for Chicken
+                  builder:
+                      (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                    if (streamSnapshot.hasData) {
+                      return ListView.builder(
+                        controller: _scrollController,
+                        shrinkWrap: true,
+                        //physics: const NeverScrollableScrollPhysics(),
+                        itemCount: streamSnapshot.data!.docs.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final DocumentSnapshot documentSnapshot =
+                              streamSnapshot.data!.docs[index];
+                          return Container(
+                            margin: const EdgeInsets.symmetric(
+                                vertical: 10.0, horizontal: 10.0),
+                            child: ListTile(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => DetailPage(
+                                      documentSnapshot: documentSnapshot,
+                                    ),
+                                  ),
+                                );
+                              },
+                              leading: Container(
+                                height: 80,
+                                width: 80,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  image: DecorationImage(
+                                    image: NetworkImage(
+                                        documentSnapshot['imgUrl']),
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
-                              );
-                            },
-                            leading: Container(
-                              height: 80,
-                              width: 80,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                image: DecorationImage(
-                                  image:
-                                      NetworkImage(documentSnapshot['imgUrl']),
-                                  fit: BoxFit.cover,
+                              ),
+                              title: Text(
+                                documentSnapshot['name'],
+                                style: const TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              subtitle: Text(
+                                documentSnapshot['category'],
+                                style: const TextStyle(
+                                  fontSize: 16.0,
                                 ),
                               ),
                             ),
-                            title: Text(
-                              documentSnapshot['name'],
-                              style: const TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            subtitle: Text(
-                              documentSnapshot['category'],
-                              style: const TextStyle(
-                                fontSize: 16.0,
-                              ),
-                            ),
-                          ),
-                        );
-                      },
+                          );
+                        },
+                      );
+                    }
+                    return const Center(
+                      child: CircularProgressIndicator(),
                     );
-                  }
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                },
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       floatingActionButton: _showFloatingButton
