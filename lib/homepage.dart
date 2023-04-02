@@ -88,6 +88,16 @@ class _HomePageState extends State<HomePage> {
             children: [
 // Banner image
               Container(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.7),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
+                ),
                 margin: const EdgeInsets.all(12.0),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10.0),
@@ -178,6 +188,15 @@ class _HomePageState extends State<HomePage> {
                               height: 100,
                               width: 250,
                               decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.7),
+                                    spreadRadius: 2,
+                                    blurRadius: 5,
+                                    offset: const Offset(
+                                        0, 3), // changes position of shadow
+                                  ),
+                                ],
                                 borderRadius: BorderRadius.circular(10),
                                 image: DecorationImage(
                                   image: AssetImage(healthImages[index]),
@@ -236,6 +255,15 @@ class _HomePageState extends State<HomePage> {
                               height: 100,
                               width: 100,
                               decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.7),
+                                    spreadRadius: 2,
+                                    blurRadius: 5,
+                                    offset: const Offset(
+                                        0, 3), // changes position of shadow
+                                  ),
+                                ],
                                 borderRadius: BorderRadius.circular(10),
                                 image: DecorationImage(
                                   image: AssetImage(categoryImage[index]),
@@ -339,6 +367,17 @@ class _HomePageState extends State<HomePage> {
                                       height: 150,
                                       width: 250,
                                       decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.6),
+                                            spreadRadius: 2,
+                                            blurRadius: 5,
+                                            offset: const Offset(
+                                              0,
+                                              3,
+                                            ), // changes position of shadow
+                                          ),
+                                        ],
                                         borderRadius: BorderRadius.circular(10),
                                         image: DecorationImage(
                                           image: NetworkImage(
@@ -450,6 +489,17 @@ class _HomePageState extends State<HomePage> {
                                       height: 150,
                                       width: 250,
                                       decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.6),
+                                            spreadRadius: 2,
+                                            blurRadius: 5,
+                                            offset: const Offset(
+                                              0,
+                                              3,
+                                            ), // changes position of shadow
+                                          ),
+                                        ],
                                         borderRadius: BorderRadius.circular(10),
                                         image: DecorationImage(
                                           image: NetworkImage(
@@ -561,6 +611,17 @@ class _HomePageState extends State<HomePage> {
                                       height: 150,
                                       width: 250,
                                       decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.6),
+                                            spreadRadius: 2,
+                                            blurRadius: 5,
+                                            offset: const Offset(
+                                              0,
+                                              3,
+                                            ), // changes position of shadow
+                                          ),
+                                        ],
                                         borderRadius: BorderRadius.circular(10),
                                         image: DecorationImage(
                                           image: NetworkImage(
@@ -672,6 +733,17 @@ class _HomePageState extends State<HomePage> {
                                       height: 150,
                                       width: 250,
                                       decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.6),
+                                            spreadRadius: 2,
+                                            blurRadius: 5,
+                                            offset: const Offset(
+                                              0,
+                                              3,
+                                            ), // changes position of shadow
+                                          ),
+                                        ],
                                         borderRadius: BorderRadius.circular(10),
                                         image: DecorationImage(
                                           image: NetworkImage(
@@ -783,6 +855,17 @@ class _HomePageState extends State<HomePage> {
                                       height: 150,
                                       width: 250,
                                       decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.6),
+                                            spreadRadius: 2,
+                                            blurRadius: 5,
+                                            offset: const Offset(
+                                              0,
+                                              3,
+                                            ), // changes position of shadow
+                                          ),
+                                        ],
                                         borderRadius: BorderRadius.circular(10),
                                         image: DecorationImage(
                                           image: NetworkImage(
@@ -894,6 +977,17 @@ class _HomePageState extends State<HomePage> {
                                       height: 150,
                                       width: 250,
                                       decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.6),
+                                            spreadRadius: 2,
+                                            blurRadius: 5,
+                                            offset: const Offset(
+                                              0,
+                                              3,
+                                            ), // changes position of shadow
+                                          ),
+                                        ],
                                         borderRadius: BorderRadius.circular(10),
                                         image: DecorationImage(
                                           image: NetworkImage(
@@ -1005,6 +1099,17 @@ class _HomePageState extends State<HomePage> {
                                       height: 150,
                                       width: 250,
                                       decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.6),
+                                            spreadRadius: 2,
+                                            blurRadius: 5,
+                                            offset: const Offset(
+                                              0,
+                                              3,
+                                            ), // changes position of shadow
+                                          ),
+                                        ],
                                         borderRadius: BorderRadius.circular(10),
                                         image: DecorationImage(
                                           image: NetworkImage(
@@ -1116,6 +1221,17 @@ class _HomePageState extends State<HomePage> {
                                       height: 150,
                                       width: 250,
                                       decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.6),
+                                            spreadRadius: 2,
+                                            blurRadius: 5,
+                                            offset: const Offset(
+                                              0,
+                                              3,
+                                            ), // changes position of shadow
+                                          ),
+                                        ],
                                         borderRadius: BorderRadius.circular(10),
                                         image: DecorationImage(
                                           image: NetworkImage(
@@ -1227,6 +1343,17 @@ class _HomePageState extends State<HomePage> {
                                       height: 150,
                                       width: 250,
                                       decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.6),
+                                            spreadRadius: 2,
+                                            blurRadius: 5,
+                                            offset: const Offset(
+                                              0,
+                                              3,
+                                            ), // changes position of shadow
+                                          ),
+                                        ],
                                         borderRadius: BorderRadius.circular(10),
                                         image: DecorationImage(
                                           image: NetworkImage(
@@ -1338,6 +1465,17 @@ class _HomePageState extends State<HomePage> {
                                       height: 150,
                                       width: 250,
                                       decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.6),
+                                            spreadRadius: 2,
+                                            blurRadius: 5,
+                                            offset: const Offset(
+                                              0,
+                                              3,
+                                            ), // changes position of shadow
+                                          ),
+                                        ],
                                         borderRadius: BorderRadius.circular(10),
                                         image: DecorationImage(
                                           image: NetworkImage(
