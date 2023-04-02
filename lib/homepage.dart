@@ -90,9 +90,11 @@ class _HomePageState extends State<HomePage> {
               Container(
                 margin: const EdgeInsets.all(12.0),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(30.0),
+                  borderRadius: BorderRadius.circular(10.0),
                   child: const Image(
-                    image: AssetImage('assets/researching.png'),
+                    image: AssetImage(
+                      'assets/banners/home_banner/home_banner.jpg',
+                    ),
                     fit: BoxFit.cover,
                   ),
                 ),
