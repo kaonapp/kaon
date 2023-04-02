@@ -39,12 +39,14 @@ class _BeefPageState extends State<BeefPage> {
   bool _showFloatingButton = false;
 
   //chips for filtering Beef diet options
-  String? _selectedDiet = 'Standard';
-  final List<String> _dietOptions = const [
-    'Standard',
-    'Diabetic',
-    'Weight-reduction'
-  ];
+  // String? _selectedDiet = 'Standard';
+  // final List<String> _dietOptions = const [
+  //   'Standard',
+  //   'Diabetic',
+  //   'Weight-reduction'
+  // ];
+
+  String? selectedHealthOption = 'Standard';
 
   @override
   Widget build(BuildContext context) {
@@ -52,11 +54,30 @@ class _BeefPageState extends State<BeefPage> {
       appBar: AppBar(
         //category name
         title: const Text(
-          'Beef',
+          '',
           style: TextStyle(color: Colors.black),
         ),
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(color: Colors.black),
+        actions: <Widget>[
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.filter_list),
+            onSelected: (String value) {
+              setState(() {
+                selectedHealthOption = value;
+              });
+            },
+            itemBuilder: (BuildContext context) {
+              return {'Standard', 'Diabetic', 'Weight-reduction'}
+                  .map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            },
+          ),
+        ],
       ),
       body: Container(
         padding: const EdgeInsets.only(
@@ -68,28 +89,51 @@ class _BeefPageState extends State<BeefPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: Wrap(
-                runAlignment: WrapAlignment.spaceEvenly,
-                clipBehavior: Clip.antiAlias,
-                spacing: 2.0,
-                children: _dietOptions.map((option) {
-                  return FilterChip(
-                    label: Text(option),
-                    selected: _selectedDiet == option,
-                    onSelected: (selected) {
-                      setState(() {
-                        _selectedDiet = selected ? option : 'Standard';
-                      });
-                    },
-                  );
-                }).toList(),
+            // Banner image
+            Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.7),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: const Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+              ),
+              margin: const EdgeInsets.all(12.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10.0),
+                child: const Image(
+                  image: AssetImage(
+                    'assets/banners/banner_per_page/beef.jpg',
+                  ),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
+            // Center(
+            //   child: Wrap(
+            //     runAlignment: WrapAlignment.spaceEvenly,
+            //     clipBehavior: Clip.antiAlias,
+            //     spacing: 2.0,
+            //     children: _dietOptions.map((option) {
+            //       return FilterChip(
+            //         label: Text(option),
+            //         selected: _selectedDiet == option,
+            //         onSelected: (selected) {
+            //           setState(() {
+            //             _selectedDiet = selected ? option : 'Standard';
+            //           });
+            //         },
+            //       );
+            //     }).toList(),
+            //   ),
+            // ),
             const SizedBox(
               height: 10,
             ),
-            Text("Selected diet: $_selectedDiet"),
+            Text("Selected diet: $selectedHealthOption"),
             const SizedBox(
               height: 10,
             ),
@@ -99,7 +143,7 @@ class _BeefPageState extends State<BeefPage> {
                 stream: _dishes
                     .orderBy('name', descending: false)
                     .where("category", isEqualTo: "Beef")
-                    .where('diet', arrayContains: _selectedDiet)
+                    .where('diet', arrayContains: selectedHealthOption)
                     .snapshots(), //connects to DB //build connection
                 builder:
                     (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {

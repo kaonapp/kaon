@@ -60,6 +60,29 @@ class _EggPageState extends State<EggPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Banner image
+            Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.7),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: const Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+              ),
+              margin: const EdgeInsets.all(12.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10.0),
+                child: const Image(
+                  image: AssetImage(
+                    'assets/banners/banner_per_page/egg.jpg',
+                  ),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
             const SizedBox(
               height: 10,
             ),
