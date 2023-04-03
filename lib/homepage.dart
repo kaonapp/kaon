@@ -4,7 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ui/categoryPage/dessertpage.dart';
 import 'package:ui/categoryPage/eggpage.dart';
+import 'package:ui/categoryPage/fishpage.dart';
 import 'package:ui/categoryPage/porkpage.dart';
+import 'package:ui/categoryPage/ricepage.dart';
+import 'package:ui/categoryPage/seafoodpage.dart';
 import 'package:ui/categoryPage/souppage.dart';
 import 'package:ui/categoryPage/vegetablepage.dart';
 import 'package:ui/categorypage.dart';
@@ -18,6 +21,7 @@ import 'dietPage/diabeticpage.dart';
 import 'dietPage/standardpage.dart';
 import 'dietPage/veganpage.dart';
 import 'dietPage/weightpage.dart';
+import 'lists/list_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -31,588 +35,1249 @@ class _HomePageState extends State<HomePage> {
   final CollectionReference _dishes =
       FirebaseFirestore.instance.collection('dishes');
 
+  // Scroll to top controller
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_scrollListener);
+  }
+
+  _scrollListener() {
+    if (_scrollController.offset >= 100) {
+      // change 100 to your desired offset
+      setState(() {
+        _showFloatingButton = true;
+      });
+    } else {
+      setState(() {
+        _showFloatingButton = false;
+      });
+    }
+  }
+
+  bool _showFloatingButton = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Kaon!',
-          style: TextStyle(
-            fontSize: 35,
-            fontWeight: FontWeight.bold,
-            fontStyle: FontStyle.italic,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: CircleAvatar(
+            //kaon logo here
+            backgroundImage: AssetImage('assets/splash.png'),
           ),
         ),
-        // actions: [
-        //   IconButton(
-        //     onPressed: () {},
-        //     icon: const Icon(Icons.filter_alt),
-        //   ),
-        // ],
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.only(
-            top: 20,
-            left: 25,
-            right: 25,
-            bottom: 15,
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.kitchen),
+            color: Colors.black,
           ),
+        ],
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          controller: _scrollController,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  const Text(
-                    'Categories',
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.normal,
+// Banner image
+              Container(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.7),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: const Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
+                ),
+                margin: const EdgeInsets.all(12.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: const Image(
+                    image: AssetImage(
+                      'assets/banners/home_banner/home_banner.jpg',
+                    ),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+
+// Search button -----
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  'What would you like to eat?',
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 20),
+              Container(
+                height: 50,
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: GestureDetector(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SearchPage(),
                     ),
                   ),
-                  Expanded(
-                    child: Column(),
+                  child: const TextField(
+                    enabled: false,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      prefixIcon: Icon(Icons.search),
+                      hintText: 'Search for food or cuisine',
+                      hintStyle: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 16,
+                      ),
+                    ),
                   ),
-                  TextButton(
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              // Health option section
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  'Health Options',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              // Health option section container
+              Container(
+                height: 150,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: healthList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          GestureDetector(
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => healthPages[index],
+                              ),
+                            ),
+                            child: Container(
+                              height: 100,
+                              width: 250,
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.7),
+                                    spreadRadius: 2,
+                                    blurRadius: 5,
+                                    offset: const Offset(
+                                        0, 3), // changes position of shadow
+                                  ),
+                                ],
+                                borderRadius: BorderRadius.circular(10),
+                                image: DecorationImage(
+                                  image: AssetImage(healthImages[index]),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            healthList[index],
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(height: 20),
+              // Category Section
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  'Categories',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              // Category Section container
+              Container(
+                height: 150,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: categoryList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          GestureDetector(
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => categoryPage[index],
+                              ),
+                            ),
+                            child: Container(
+                              height: 100,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.7),
+                                    spreadRadius: 2,
+                                    blurRadius: 5,
+                                    offset: const Offset(
+                                        0, 3), // changes position of shadow
+                                  ),
+                                ],
+                                borderRadius: BorderRadius.circular(10),
+                                image: DecorationImage(
+                                  image: AssetImage(categoryImage[index]),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            categoryList[index],
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+
+              // chicken section
+              const SizedBox(height: 30),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Chicken ',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextButton(
                       onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const CategoryPage(),
+                            builder: (context) => const ChickenPage(),
                           ),
                         );
                       },
-                      child: const Text('view all >'))
-                ],
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              //input stream builder categories in listview below
-              Container(
-                width: double.infinity,
-                height: 100.0,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: <Widget>[
-                    //Chicken
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                        image: DecorationImage(
-                          image: const AssetImage(
-                            'assets/Chicken.jpg',
-                          ),
-                          fit: BoxFit.fill,
-                          colorFilter: ColorFilter.mode(
-                              Colors.grey.withOpacity(0.3), BlendMode.dstATop),
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ChickenPage(),
-                            ),
-                          );
-                        },
-                        child: const Text(
-                          'Chicken',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //pork container
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        image: DecorationImage(
-                          image: const AssetImage(
-                            'assets/pork.jpg',
-                          ),
-                          fit: BoxFit.fill,
-                          colorFilter: ColorFilter.mode(
-                              Colors.grey.withOpacity(0.3), BlendMode.dstATop),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const PorkPage(),
-                            ),
-                          );
-                        },
-                        child: const Text(
-                          'Pork',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //vegetable container
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        image: DecorationImage(
-                          image: const AssetImage(
-                            'assets/vegetable.jpg',
-                          ),
-                          fit: BoxFit.fill,
-                          colorFilter: ColorFilter.mode(
-                              Colors.grey.withOpacity(0.5), BlendMode.dstATop),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const VegetablePage(),
-                            ),
-                          );
-                        },
-                        child: const Text(
-                          'Vegetable',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //dessert container
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        image: DecorationImage(
-                          image: const AssetImage(
-                            'assets/dessert.jpg',
-                          ),
-                          fit: BoxFit.fill,
-                          colorFilter: ColorFilter.mode(
-                              Colors.grey.withOpacity(0.5), BlendMode.dstATop),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const DessertPage(),
-                            ),
-                          );
-                        },
-                        child: const Text(
-                          'Dessert',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //egg container
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        image: DecorationImage(
-                          image: const AssetImage(
-                            'assets/egg.jpg',
-                          ),
-                          fit: BoxFit.fill,
-                          colorFilter: ColorFilter.mode(
-                              Colors.grey.withOpacity(0.5), BlendMode.dstATop),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const EggPage(),
-                            ),
-                          );
-                        },
-                        child: const Text(
-                          'Egg',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //beef container
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        image: DecorationImage(
-                          image: const AssetImage(
-                            'assets/beef.jpg',
-                          ),
-                          fit: BoxFit.fill,
-                          colorFilter: ColorFilter.mode(
-                              Colors.grey.withOpacity(0.5), BlendMode.dstATop),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const BeefPage(),
-                            ),
-                          );
-                        },
-                        child: const Text(
-                          'Beef',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                          ),
+                      child: Text(
+                        'View All',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey.withOpacity(
+                              0.7), // Set the color to grey with an opacity of 0.7
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              //browse by diet
-              Row(
-                children: [
-                  const Text(
-                    'Browse by diet',
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.normal,
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(),
-                  ),
-                  //TextButton(onPressed: () {}, child: const Text('view all >'))
-                ],
-              ),
-              const SizedBox(
-                height: 15,
-              ),
+              const SizedBox(height: 10),
+              // Chicken Section Container
               Container(
-                width: double.infinity,
-                height: 100.0,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: <Widget>[
-                    //Standard diet
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const StandardPage(),
+                height: 200,
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: _dishes
+                      .orderBy('name', descending: false)
+                      .where('category', isEqualTo: "Chicken")
+                      .limit(10)
+                      .snapshots(), //connects to DB //build connection for Chicken
+                  builder:
+                      (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                    if (streamSnapshot.hasData) {
+                      return ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: streamSnapshot.data!.docs.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final DocumentSnapshot documentSnapshot =
+                              streamSnapshot.data!.docs[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => DetailPage(
+                                          documentSnapshot: documentSnapshot,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Card(
+                                    elevation: 5,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Container(
+                                      height: 150,
+                                      width: 250,
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.6),
+                                            spreadRadius: 2,
+                                            blurRadius: 5,
+                                            offset: const Offset(
+                                              0,
+                                              3,
+                                            ), // changes position of shadow
+                                          ),
+                                        ],
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                              documentSnapshot['imgUrl']),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  documentSnapshot['name'],
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
                             ),
                           );
                         },
-                        child: const Text(
-                          'Standard',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
-                    ),
+                      );
+                    }
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                ),
+              ),
 
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //Diabetic container
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
+              // pork section
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Pork',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
                       ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const DiabeticPage(),
-                            ),
-                          );
-                        },
-                        child: const Text(
-                          'Diabetic',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const PorkPage(),
                           ),
+                        );
+                      },
+                      child: Text(
+                        'View All',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey.withOpacity(
+                              0.7), // Set the color to grey with an opacity of 0.7
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //Arthritis container
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ArthritisPage(),
-                            ),
-                          );
-                        },
-                        child: const Text(
-                          'Arthritis',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //Weight-reduction container
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const WeightPage(),
-                            ),
-                          );
-                        },
-                        child: const Text(
-                          'Weight-reduction',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //Vegan container
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const VeganPage(),
-                            ),
-                          );
-                        },
-                        child: const Text(
-                          'Vegan',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 15,
                     ),
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 15,
+              const SizedBox(height: 10),
+              // Pork Section Container
+              Container(
+                height: 200,
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: _dishes
+                      .orderBy('name', descending: false)
+                      .where('category', isEqualTo: "Pork")
+                      .limit(10)
+                      .snapshots(), //connects to DB //build connection for Chicken
+                  builder:
+                      (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                    if (streamSnapshot.hasData) {
+                      return ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: streamSnapshot.data!.docs.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final DocumentSnapshot documentSnapshot =
+                              streamSnapshot.data!.docs[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => DetailPage(
+                                          documentSnapshot: documentSnapshot,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Card(
+                                    elevation: 5,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Container(
+                                      height: 150,
+                                      width: 250,
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.6),
+                                            spreadRadius: 2,
+                                            blurRadius: 5,
+                                            offset: const Offset(
+                                              0,
+                                              3,
+                                            ), // changes position of shadow
+                                          ),
+                                        ],
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                              documentSnapshot['imgUrl']),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  documentSnapshot['name'],
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    }
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                ),
               ),
-              //Dessert
-              Row(
-                children: [
-                  const Text(
-                    'Dessert',
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.normal,
+
+              // beef section
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Beef',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: Column(),
-                  ),
-                  TextButton(
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const BeefPage(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'View All',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey.withOpacity(
+                              0.7), // Set the color to grey with an opacity of 0.7
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              // Beef Section Container
+              Container(
+                height: 200,
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: _dishes
+                      .orderBy('name', descending: false)
+                      .where('category', isEqualTo: "Beef")
+                      .limit(10)
+                      .snapshots(), //connects to DB //build connection for Chicken
+                  builder:
+                      (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                    if (streamSnapshot.hasData) {
+                      return ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: streamSnapshot.data!.docs.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final DocumentSnapshot documentSnapshot =
+                              streamSnapshot.data!.docs[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => DetailPage(
+                                          documentSnapshot: documentSnapshot,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Card(
+                                    elevation: 5,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Container(
+                                      height: 150,
+                                      width: 250,
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.6),
+                                            spreadRadius: 2,
+                                            blurRadius: 5,
+                                            offset: const Offset(
+                                              0,
+                                              3,
+                                            ), // changes position of shadow
+                                          ),
+                                        ],
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                              documentSnapshot['imgUrl']),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  documentSnapshot['name'],
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    }
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                ),
+              ),
+
+              // fish section
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Fish',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const FishPage(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'View All',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey.withOpacity(
+                              0.7), // Set the color to grey with an opacity of 0.7
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              //Fish Section Container
+              Container(
+                height: 200,
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: _dishes
+                      .orderBy('name', descending: false)
+                      .where('category', isEqualTo: "Fish")
+                      .limit(10)
+                      .snapshots(), //connects to DB //build connection for Chicken
+                  builder:
+                      (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                    if (streamSnapshot.hasData) {
+                      return ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: streamSnapshot.data!.docs.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final DocumentSnapshot documentSnapshot =
+                              streamSnapshot.data!.docs[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => DetailPage(
+                                          documentSnapshot: documentSnapshot,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Card(
+                                    elevation: 5,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Container(
+                                      height: 150,
+                                      width: 250,
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.6),
+                                            spreadRadius: 2,
+                                            blurRadius: 5,
+                                            offset: const Offset(
+                                              0,
+                                              3,
+                                            ), // changes position of shadow
+                                          ),
+                                        ],
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                              documentSnapshot['imgUrl']),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  documentSnapshot['name'],
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    }
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                ),
+              ),
+
+              // seafood section
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Seafood',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SeafoodPage(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'View All',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey.withOpacity(
+                              0.7), // Set the color to grey with an opacity of 0.7
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              // Seafood Container
+              Container(
+                height: 200,
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: _dishes
+                      .orderBy('name', descending: false)
+                      .where('category', isEqualTo: "Seafood")
+                      .limit(10)
+                      .snapshots(), //connects to DB //build connection for Chicken
+                  builder:
+                      (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                    if (streamSnapshot.hasData) {
+                      return ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: streamSnapshot.data!.docs.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final DocumentSnapshot documentSnapshot =
+                              streamSnapshot.data!.docs[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => DetailPage(
+                                          documentSnapshot: documentSnapshot,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Card(
+                                    elevation: 5,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Container(
+                                      height: 150,
+                                      width: 250,
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.6),
+                                            spreadRadius: 2,
+                                            blurRadius: 5,
+                                            offset: const Offset(
+                                              0,
+                                              3,
+                                            ), // changes position of shadow
+                                          ),
+                                        ],
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                              documentSnapshot['imgUrl']),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  documentSnapshot['name'],
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    }
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                ),
+              ),
+
+              // egg section
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Egg',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const EggPage(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'View All',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey.withOpacity(
+                              0.7), // Set the color to grey with an opacity of 0.7
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              // Egg Container
+              Container(
+                height: 200,
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: _dishes
+                      .orderBy('name', descending: false)
+                      .where('category', isEqualTo: "Egg")
+                      .limit(10)
+                      .snapshots(), //connects to DB //build connection for Chicken
+                  builder:
+                      (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                    if (streamSnapshot.hasData) {
+                      return ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: streamSnapshot.data!.docs.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final DocumentSnapshot documentSnapshot =
+                              streamSnapshot.data!.docs[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => DetailPage(
+                                          documentSnapshot: documentSnapshot,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Card(
+                                    elevation: 5,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Container(
+                                      height: 150,
+                                      width: 250,
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.6),
+                                            spreadRadius: 2,
+                                            blurRadius: 5,
+                                            offset: const Offset(
+                                              0,
+                                              3,
+                                            ), // changes position of shadow
+                                          ),
+                                        ],
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                              documentSnapshot['imgUrl']),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  documentSnapshot['name'],
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    }
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                ),
+              ),
+
+              // rice and alt section
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Rice and Alternatives',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const RicePage(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'View All',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey.withOpacity(
+                              0.7), // Set the color to grey with an opacity of 0.7
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              // Rice and alternatives Container
+              Container(
+                height: 200,
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: _dishes
+                      .orderBy('name', descending: false)
+                      .where('category', isEqualTo: "Rice and alternatives")
+                      .limit(10)
+                      .snapshots(), //connects to DB //build connection for Chicken
+                  builder:
+                      (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                    if (streamSnapshot.hasData) {
+                      return ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: streamSnapshot.data!.docs.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final DocumentSnapshot documentSnapshot =
+                              streamSnapshot.data!.docs[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => DetailPage(
+                                          documentSnapshot: documentSnapshot,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Card(
+                                    elevation: 5,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Container(
+                                      height: 150,
+                                      width: 250,
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.6),
+                                            spreadRadius: 2,
+                                            blurRadius: 5,
+                                            offset: const Offset(
+                                              0,
+                                              3,
+                                            ), // changes position of shadow
+                                          ),
+                                        ],
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                              documentSnapshot['imgUrl']),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  documentSnapshot['name'],
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    }
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                ),
+              ),
+
+              // soup section
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Soup',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SoupPage(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'View All',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey.withOpacity(
+                              0.7), // Set the color to grey with an opacity of 0.7
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              // Soup Container
+              Container(
+                height: 200,
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: _dishes
+                      .orderBy('name', descending: false)
+                      .where('category', isEqualTo: "Soup")
+                      .limit(10)
+                      .snapshots(), //connects to DB //build connection for Chicken
+                  builder:
+                      (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                    if (streamSnapshot.hasData) {
+                      return ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: streamSnapshot.data!.docs.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final DocumentSnapshot documentSnapshot =
+                              streamSnapshot.data!.docs[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => DetailPage(
+                                          documentSnapshot: documentSnapshot,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Card(
+                                    elevation: 5,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Container(
+                                      height: 150,
+                                      width: 250,
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.6),
+                                            spreadRadius: 2,
+                                            blurRadius: 5,
+                                            offset: const Offset(
+                                              0,
+                                              3,
+                                            ), // changes position of shadow
+                                          ),
+                                        ],
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                              documentSnapshot['imgUrl']),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
+                                  documentSnapshot['name'],
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    }
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                ),
+              ),
+
+              // dessert section
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Dessert',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextButton(
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -621,107 +1286,120 @@ class _HomePageState extends State<HomePage> {
                           ),
                         );
                       },
-                      child: const Text('view all >'))
-                ],
+                      child: Text(
+                        'View All',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey.withOpacity(
+                              0.7), // Set the color to grey with an opacity of 0.7
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              const SizedBox(
-                height: 15,
-              ),
+              const SizedBox(height: 10),
+              // Dessert Container
               Container(
-                width: double.infinity,
-                height: 100.0,
+                height: 200,
                 child: StreamBuilder<QuerySnapshot>(
                   stream: _dishes
                       .orderBy('name', descending: false)
                       .where('category', isEqualTo: "Dessert")
-                      .snapshots(), //connects to DB //build connection
+                      .limit(10)
+                      .snapshots(), //connects to DB //build connection for Chicken
                   builder:
                       (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
                     if (streamSnapshot.hasData) {
                       return ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: streamSnapshot.data!.docs.length,
-                        itemBuilder: (context, index) {
+                        itemBuilder: (BuildContext context, int index) {
                           final DocumentSnapshot documentSnapshot =
                               streamSnapshot.data!.docs[index];
-
-                          return //Dessert diet
-                              Container(
-                            margin: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                bottomRight: Radius.circular(10),
-                                bottomLeft: Radius.circular(10),
-                                topRight: Radius.circular(10),
-                              ),
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 2.0,
-                              ),
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                  documentSnapshot['imgUrl'],
-                                ),
-                                fit: BoxFit.fill,
-                                colorFilter: ColorFilter.mode(
-                                    Colors.grey.withOpacity(0.4),
-                                    BlendMode.dstATop),
-                              ),
-                            ),
-                            width: 160.0,
-                            // color: Colors.red,
-                            child: TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => DetailPage(
-                                      documentSnapshot: documentSnapshot,
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => DetailPage(
+                                          documentSnapshot: documentSnapshot,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Card(
+                                    elevation: 5,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Container(
+                                      height: 150,
+                                      width: 250,
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.6),
+                                            spreadRadius: 2,
+                                            blurRadius: 5,
+                                            offset: const Offset(
+                                              0,
+                                              3,
+                                            ), // changes position of shadow
+                                          ),
+                                        ],
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                              documentSnapshot['imgUrl']),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                );
-                              },
-                              child: Center(
-                                child: Text(
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
                                   documentSnapshot['name'],
                                   style: const TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.normal,
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
                           );
                         },
                       );
                     }
-
                     return const Center(
                       child: CircularProgressIndicator(),
                     );
                   },
                 ),
               ),
-              const SizedBox(
-                height: 15,
-              ),
-              //Vegetable Row
-              Row(
-                children: [
-                  const Text(
-                    'Vegetable',
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.normal,
+
+              // vegetable section
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Vegetables',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: Column(),
-                  ),
-                  TextButton(
+                    TextButton(
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -730,95 +1408,121 @@ class _HomePageState extends State<HomePage> {
                           ),
                         );
                       },
-                      child: const Text('view all >'))
-                ],
+                      child: Text(
+                        'View All',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey.withOpacity(
+                              0.7), // Set the color to grey with an opacity of 0.7
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              const SizedBox(
-                height: 15,
-              ),
-              //Vegetable Select
+              const SizedBox(height: 10),
+              // Vegetable Container
               Container(
-                width: double.infinity,
-                height: 100.0,
+                height: 200,
                 child: StreamBuilder<QuerySnapshot>(
                   stream: _dishes
                       .orderBy('name', descending: false)
                       .where('category', isEqualTo: "Vegetable")
-                      .limit(6)
-                      .snapshots(), //connects to DB //build connection
+                      .limit(10)
+                      .snapshots(), //connects to DB //build connection for Chicken
                   builder:
                       (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
                     if (streamSnapshot.hasData) {
                       return ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: streamSnapshot.data!.docs.length,
-                        itemBuilder: (context, index) {
+                        itemBuilder: (BuildContext context, int index) {
                           final DocumentSnapshot documentSnapshot =
                               streamSnapshot.data!.docs[index];
-
-                          return //vegetable diet
-                              Container(
-                            margin: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                bottomRight: Radius.circular(10),
-                                bottomLeft: Radius.circular(10),
-                                topRight: Radius.circular(10),
-                              ),
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                  documentSnapshot['imgUrl'],
-                                ),
-                                fit: BoxFit.fill,
-                                colorFilter: ColorFilter.mode(
-                                    Colors.grey.withOpacity(0.5),
-                                    BlendMode.dstATop),
-                              ),
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 2.0,
-                              ),
-                            ),
-                            width: 160.0,
-                            // color: Colors.red,
-                            child: TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => DetailPage(
-                                      documentSnapshot: documentSnapshot,
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => DetailPage(
+                                          documentSnapshot: documentSnapshot,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Card(
+                                    elevation: 5,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Container(
+                                      height: 150,
+                                      width: 250,
+                                      decoration: BoxDecoration(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey.withOpacity(0.6),
+                                            spreadRadius: 2,
+                                            blurRadius: 5,
+                                            offset: const Offset(
+                                              0,
+                                              3,
+                                            ), // changes position of shadow
+                                          ),
+                                        ],
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                              documentSnapshot['imgUrl']),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                );
-                              },
-                              child: Center(
-                                child: Text(
+                                ),
+                                const SizedBox(height: 10),
+                                Text(
                                   documentSnapshot['name'],
                                   style: const TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.normal,
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
                           );
                         },
                       );
                     }
-
                     return const Center(
                       child: CircularProgressIndicator(),
                     );
                   },
                 ),
               ),
+
+              //footer
+              const SizedBox(height: 30),
             ],
           ),
         ),
       ),
+      floatingActionButton: _showFloatingButton
+          ? FloatingActionButton(
+              onPressed: () {
+                _scrollController.animateTo(0,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInOut);
+              },
+              child: const Icon(Icons.arrow_upward),
+            )
+          : null,
     );
   }
 }
