@@ -116,8 +116,7 @@ class _SearchPageState extends State<SearchPage> {
               child: StreamBuilder<QuerySnapshot>(
                 stream: _dishes
                     .orderBy('name', descending: false)
-                    .where('name',
-                        isGreaterThanOrEqualTo: _searchController.text)
+                    .where('keyDish', arrayContains: _searchController.text)
                     .snapshots(), //connects to DB //build connection
                 builder:
                     (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
