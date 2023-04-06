@@ -21,7 +21,7 @@ class _FilterPageState extends State<FilterPage> {
   List<String> selectedFilters = [];
 
   String? selectedCategory;
-  String? selectedHealth;
+  String? selectedHealth = 'Standard';
 
   @override
   Widget build(BuildContext context) {
