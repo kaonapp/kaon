@@ -18,10 +18,27 @@ class _FilterPageState extends State<FilterPage> {
   // reference for collection/table in db (REQUIRED!)
   final CollectionReference _dishes =
       FirebaseFirestore.instance.collection('dishes');
-  List<String> selectedFilters = [];
+  //List<String> selectedFilters = [];
+  final TextEditingController _searchController = TextEditingController();
 
   String? selectedCategory;
   String? selectedHealth = 'Standard';
+  @override
+  void initState() {
+    super.initState();
+    _searchController.addListener(_onSearchChanged);
+  }
+
+  void _onSearchChanged() {
+    print(_searchController.text);
+  }
+
+  @override
+  void dispose() {
+    _searchController.removeListener(_onSearchChanged);
+    _searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -147,12 +164,58 @@ class _FilterPageState extends State<FilterPage> {
             const SizedBox(
               height: 15,
             ),
+            Container(
+              height: 50,
+              margin: const EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: TextField(
+                textCapitalization: TextCapitalization.sentences,
+                onChanged: (value) {
+                  setState(() {
+                    // _scrollController.animateTo(0,
+                    //     duration: const Duration(milliseconds: 500),
+                    //     curve: Curves.ease);
+                  });
+                },
+                controller: _searchController,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  prefixIcon: const Icon(
+                    Icons.search,
+                  ),
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.clear),
+                    onPressed: () {
+                      setState(() {
+                        _searchController.clear();
+                      });
+                    },
+                  ),
+                  hintText: 'Type your ingredients',
+                  hintStyle: const TextStyle(
+                    color: Colors.grey,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
                 stream: _dishes
                     .orderBy('name', descending: false)
                     .where('category', isEqualTo: selectedCategory)
-                    .where('diet', arrayContains: selectedHealth)
+                    .where('keyIngredients',
+                        arrayContainsAny: _searchController.text.split(','))
+                    // .where(
+                    //   'keyIngredients',
+                    //   whereIn: _searchController.text.split(','),
+                    // )
                     .snapshots(), //connects to DB //build connection
                 builder:
                     (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
@@ -242,7 +305,7 @@ class _FilterPageState extends State<FilterPage> {
                     );
                   }
                   return const Center(
-                    child: Text('No cuisine or recipe'),
+                    child: Text('No cuisine or recipe found'),
                   );
                 },
               ),
@@ -253,3 +316,14 @@ class _FilterPageState extends State<FilterPage> {
     );
   }
 }
+
+/**
+ * This code assumes that _searchController is a TextEditingController that 
+ * holds a comma-separated list of values that you want to search for in the 
+ * keyIngredients field. If _searchController is not a TextEditingController, 
+ * you can modify the code to use the appropriate variable.
+
+By using whereIn instead of arrayContains, you can pass a list of values 
+to search for instead of a single value, which allows you to perform the 
+same filtering operation without using multiple array-contains clauses.
+ */
