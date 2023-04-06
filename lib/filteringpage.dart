@@ -41,8 +41,21 @@ class _FilterPageState extends State<FilterPage> {
           children: [
             // const Text('select category:'),
             DropdownButtonFormField<String>(
+              elevation: 16,
+              decoration: const InputDecoration(
+                labelText: 'Select a category', // set the label text
+                border: OutlineInputBorder(), // add an outline border
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 10,
+                ), // add padding
+              ),
               value: selectedCategory,
               items: const [
+                DropdownMenuItem(
+                  value: null,
+                  child: Text('All'),
+                ),
                 DropdownMenuItem(
                   value: 'Chicken',
                   child: Text('Chicken'),
@@ -55,6 +68,30 @@ class _FilterPageState extends State<FilterPage> {
                   value: 'Beef',
                   child: Text('Beef'),
                 ),
+                DropdownMenuItem(
+                  value: 'Dessert',
+                  child: Text('Dessert'),
+                ),
+                DropdownMenuItem(
+                  value: 'Fish',
+                  child: Text('Fish'),
+                ),
+                DropdownMenuItem(
+                  value: 'Rice and alternatives',
+                  child: Text('Rice and alternative'),
+                ),
+                DropdownMenuItem(
+                  value: 'Seafood',
+                  child: Text('Seafood'),
+                ),
+                DropdownMenuItem(
+                  value: 'Soup',
+                  child: Text('Soup'),
+                ),
+                DropdownMenuItem(
+                  value: 'Vegetable',
+                  child: Text('Vegetable'),
+                ),
               ],
               onChanged: (value) {
                 setState(
@@ -63,12 +100,6 @@ class _FilterPageState extends State<FilterPage> {
                   },
                 );
               },
-              decoration: const InputDecoration(
-                labelText: 'Select a category', // set the label text
-                border: OutlineInputBorder(), // add an outline border
-                contentPadding: EdgeInsets.symmetric(
-                    horizontal: 10, vertical: 10), // add padding
-              ),
             ),
             const SizedBox(
               height: 20,
@@ -85,6 +116,14 @@ class _FilterPageState extends State<FilterPage> {
                 DropdownMenuItem(
                   value: 'Arthritis',
                   child: Text('Arthritis'),
+                ),
+                DropdownMenuItem(
+                  value: 'Weight-reduction',
+                  child: Text('Weight-reduction'),
+                ),
+                DropdownMenuItem(
+                  value: 'Diabetic',
+                  child: Text('Diabetic'),
                 ),
                 DropdownMenuItem(
                   value: 'Vegan',
