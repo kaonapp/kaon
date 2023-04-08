@@ -43,13 +43,13 @@ class _FilterPageState extends State<FilterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: CircleAvatar(
-            //kaon logo here
-            backgroundImage: AssetImage('assets/splash.png'),
-          ),
-        ),
+        // leading: const Padding(
+        //   padding: EdgeInsets.all(8.0),
+        //   child: CircleAvatar(
+        //     //kaon logo here
+        //     backgroundImage: AssetImage('assets/splash.png'),
+        //   ),
+        // ),
         title: const Text(
           'Fridge',
           style: TextStyle(

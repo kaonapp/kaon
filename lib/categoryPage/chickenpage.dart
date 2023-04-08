@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_interpolation_to_compose_strings, duplicate_ignore
+// ignore_for_file: prefer_interpolation_to_compose_strings, duplicate_ignore, unrelated_type_equality_checks
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +41,7 @@ class _ChickenPageState extends State<ChickenPage> {
   bool _showFloatingButton = false;
 
 //chips for filtering chicken diet options
-  String? _selectedDiet = 'Standard';
+  final List<String> _selectedDiet = ['Standard'];
   final List<String> _dietOptions = const [
     'Standard',
     'Arthritis',
@@ -115,8 +115,8 @@ class _ChickenPageState extends State<ChickenPage> {
                 ),
               ),
             ),
-            //filter chips
 
+            //filter chips
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: SingleChildScrollView(
@@ -128,10 +128,23 @@ class _ChickenPageState extends State<ChickenPage> {
                   children: _dietOptions.map((option) {
                     return FilterChip(
                       label: Text(option),
-                      selected: _selectedDiet == option,
+                      checkmarkColor: Colors.green,
+                      showCheckmark: true, // add showCheckmark property
+                      selectedColor: const Color.fromARGB(255, 253, 216, 192),
+                      selected: _selectedDiet.contains(option), // fix here
+
                       onSelected: (selected) {
                         setState(() {
-                          _selectedDiet = selected ? option : 'Standard';
+                          if (selected) {
+                            if (_selectedDiet.length < 2) {
+                              _selectedDiet.add(option);
+                            } else {
+                              _selectedDiet[0] = _selectedDiet[1];
+                              _selectedDiet[1] = option;
+                            }
+                          } else {
+                            _selectedDiet.remove(option);
+                          }
                         });
                       },
                     );
@@ -143,7 +156,8 @@ class _ChickenPageState extends State<ChickenPage> {
             const SizedBox(
               height: 10,
             ),
-            Text("Selected diet: $_selectedDiet"),
+
+            Text("Selected diet: ${_selectedDiet.join(', ')}"),
             const SizedBox(
               height: 10,
             ),
@@ -153,7 +167,10 @@ class _ChickenPageState extends State<ChickenPage> {
                 stream: _dishes
                     .orderBy('name', descending: false)
                     .where("category", isEqualTo: "Chicken")
-                    .where('diet', arrayContains: _selectedDiet)
+                    .where(
+                      'diet',
+                      arrayContainsAny: _selectedDiet,
+                    )
                     .snapshots(), //connects to DB //build connection
 
                 builder:
