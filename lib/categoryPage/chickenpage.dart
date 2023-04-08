@@ -41,7 +41,7 @@ class _ChickenPageState extends State<ChickenPage> {
   bool _showFloatingButton = false;
 
 //chips for filtering chicken diet options
-  String? _selectedDiet = 'Standard';
+  List<String> _selectedDiet = [];
   final List<String> _dietOptions = const [
     'Standard',
     'Arthritis',
@@ -131,7 +131,17 @@ class _ChickenPageState extends State<ChickenPage> {
                       selected: _selectedDiet == option,
                       onSelected: (selected) {
                         setState(() {
-                          _selectedDiet = selected ? option : 'Standard';
+                          print(_selectedDiet);
+                          if (selected) {
+                            if (_selectedDiet.length < 2) {
+                              _selectedDiet.add(option);
+                            } else {
+                              _selectedDiet[0] = _selectedDiet[1];
+                              _selectedDiet[1] = option;
+                            }
+                          } else {
+                            _selectedDiet.remove(option);
+                          }
                         });
                       },
                     );
@@ -143,7 +153,7 @@ class _ChickenPageState extends State<ChickenPage> {
             const SizedBox(
               height: 10,
             ),
-            Text("Selected diet: $_selectedDiet"),
+            Text("Selected diet: ${_selectedDiet.join(', ')}"),
             const SizedBox(
               height: 10,
             ),
@@ -153,7 +163,10 @@ class _ChickenPageState extends State<ChickenPage> {
                 stream: _dishes
                     .orderBy('name', descending: false)
                     .where("category", isEqualTo: "Chicken")
-                    .where('diet', arrayContains: _selectedDiet)
+                    .where(
+                      'diet',
+                      arrayContainsAny: _selectedDiet,
+                    )
                     .snapshots(), //connects to DB //build connection
 
                 builder:
