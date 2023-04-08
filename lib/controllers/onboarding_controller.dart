@@ -10,8 +10,9 @@ class OnboardingController extends GetxController {
 
   forwardAction() {
     if (isLastPage) {
-    } else
+    } else {
       pageController.nextPage(duration: 300.milliseconds, curve: Curves.ease);
+    }
   }
 
   List<OnboardingInfo> onboardingPages = [

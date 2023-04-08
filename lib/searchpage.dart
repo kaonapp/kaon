@@ -82,11 +82,12 @@ class _SearchPageState extends State<SearchPage> {
               ),
               child: TextField(
                 textCapitalization: TextCapitalization.sentences,
+                autofocus: true,
                 onChanged: (value) {
                   setState(() {
-                    _scrollController.animateTo(0,
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.ease);
+                    // _scrollController.animateTo(0,
+                    //     duration: const Duration(milliseconds: 500),
+                    //     curve: Curves.ease);
                   });
                 },
                 controller: _searchController,
@@ -98,7 +99,9 @@ class _SearchPageState extends State<SearchPage> {
                   suffixIcon: IconButton(
                     icon: const Icon(Icons.clear),
                     onPressed: () {
-                      _searchController.clear();
+                      setState(() {
+                        _searchController.clear();
+                      });
                     },
                   ),
                   hintText: 'Search for food or cuisine',
@@ -116,12 +119,12 @@ class _SearchPageState extends State<SearchPage> {
               child: StreamBuilder<QuerySnapshot>(
                 stream: _dishes
                     .orderBy('name', descending: false)
-                    .where('name',
-                        isGreaterThanOrEqualTo: _searchController.text)
+                    .where('keyDish', arrayContains: _searchController.text)
                     .snapshots(), //connects to DB //build connection
                 builder:
                     (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
-                  if (streamSnapshot.hasData) {
+                  if (streamSnapshot.hasData &&
+                      streamSnapshot.data!.docs.isNotEmpty) {
                     return ListView.builder(
                       controller: _scrollController,
                       shrinkWrap: true,
@@ -206,7 +209,7 @@ class _SearchPageState extends State<SearchPage> {
                     );
                   }
                   return const Center(
-                    child: CircularProgressIndicator(),
+                    child: Text('No cuisine or recipe'),
                   );
                 },
               ),

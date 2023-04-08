@@ -37,9 +37,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int _selectedIndex = 0;
+  // int _selectedIndex = 0;
 
-  final List<Widget> _pages = const [HomePage(), SearchPage(), FilterPage()];
+  // final List<Widget> _pages = const [HomePage(), SearchPage(), FilterPage()];
 
   TextStyle optionStyle =
       const TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -72,35 +72,34 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
-      home: Scaffold(
-        body:
-            //OnboardingPage(),
-            _pages[_selectedIndex],
-        bottomNavigationBar: BottomNavigationBar(
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Search',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.food_bank),
-              label: 'Filter',
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          onTap: (int index) {
-            setState(
-              () {
-                _selectedIndex = index;
-              },
-            );
-          },
-        ),
-      ),
+      home: const Scaffold(body: HomePage()
+          //OnboardingPage(),
+          //     _pages[_selectedIndex],
+          // bottomNavigationBar: BottomNavigationBar(
+          //   items: const [
+          //     BottomNavigationBarItem(
+          //       icon: Icon(Icons.home),
+          //       label: 'Home',
+          //     ),
+          //     BottomNavigationBarItem(
+          //       icon: Icon(Icons.search),
+          //       label: 'Search',
+          //     ),
+          //     BottomNavigationBarItem(
+          //       icon: Icon(Icons.food_bank),
+          //       label: 'Filter',
+          //     ),
+          //   ],
+          //   currentIndex: _selectedIndex,
+          //   onTap: (int index) {
+          //     setState(
+          //       () {
+          //         _selectedIndex = index;
+          //       },
+          //     );
+          //   },
+          // ),
+          ),
     );
   }
 }

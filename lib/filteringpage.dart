@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:ui/resultPage.dart';
+// import 'package:get/utils.dart';
+// import 'package:ui/resultPage.dart';
 
-import 'categorypage.dart';
+import 'detailpage.dart';
+
+//import 'categorypage.dart';
 
 class FilterPage extends StatefulWidget {
   const FilterPage({super.key});
@@ -15,858 +18,325 @@ class _FilterPageState extends State<FilterPage> {
   // reference for collection/table in db (REQUIRED!)
   final CollectionReference _dishes =
       FirebaseFirestore.instance.collection('dishes');
-  List<String> selectedFilters = [];
+  //List<String> selectedFilters = [];
+  final TextEditingController _searchController = TextEditingController();
+
+  String? selectedCategory;
+  String? selectedHealth = 'Standard';
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController.addListener(_onSearchChanged);
+  }
+
+  void _onSearchChanged() {}
+
+  @override
+  void dispose() {
+    _searchController.removeListener(_onSearchChanged);
+    _searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Filter',
-          style: TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
-            fontStyle: FontStyle.normal,
+        leading: const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: CircleAvatar(
+            //kaon logo here
+            backgroundImage: AssetImage('assets/splash.png'),
           ),
         ),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.only(
-            top: 20,
-            left: 10,
-            right: 10,
-            bottom: 20,
+        title: const Text(
+          'Fridge',
+          style: TextStyle(
+            color: Colors.black,
           ),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  const Text(
-                    'Choose a Category',
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.normal,
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(),
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: const Text('required'),
-                  ),
-                ],
+        ),
+        elevation: 3,
+        backgroundColor: Colors.white,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children: [
+            // const Text('select category:'),
+            // Stack(children: [
+            //   DropdownButtonFormField<String>(
+            //     elevation: 16,
+            //     decoration: const InputDecoration(
+            //       labelText: 'Select a category', // set the label text
+            //       border: OutlineInputBorder(), // add an outline border
+            //       contentPadding: EdgeInsets.symmetric(
+            //         horizontal: 10,
+            //         vertical: 10,
+            //       ), // add padding
+            //     ),
+            //     value: selectedCategory,
+            //     items: const [
+            //       DropdownMenuItem(
+            //         value: null,
+            //         child: Text('All'),
+            //       ),
+            //       DropdownMenuItem(
+            //         value: 'Chicken',
+            //         child: Text('Chicken'),
+            //       ),
+            //       DropdownMenuItem(
+            //         value: 'Egg',
+            //         child: Text('Egg'),
+            //       ),
+            //       DropdownMenuItem(
+            //         value: 'Beef',
+            //         child: Text('Beef'),
+            //       ),
+            //       DropdownMenuItem(
+            //         value: 'Dessert',
+            //         child: Text('Dessert'),
+            //       ),
+            //       DropdownMenuItem(
+            //         value: 'Fish',
+            //         child: Text('Fish'),
+            //       ),
+            //       DropdownMenuItem(
+            //         value: 'Rice and alternatives',
+            //         child: Text('Rice and alternative'),
+            //       ),
+            //       DropdownMenuItem(
+            //         value: 'Seafood',
+            //         child: Text('Seafood'),
+            //       ),
+            //       DropdownMenuItem(
+            //         value: 'Soup',
+            //         child: Text('Soup'),
+            //       ),
+            //       DropdownMenuItem(
+            //         value: 'Vegetable',
+            //         child: Text('Vegetable'),
+            //       ),
+            //     ],
+            //     onChanged: (value) {
+            //       setState(
+            //         () {
+            //           selectedCategory = value;
+            //         },
+            //       );
+            //     },
+            //   ),
+            // ]),
+            // const SizedBox(
+            //   height: 20,
+            // ),
+            //health option
+            // const Text('select health option:'),
+            // DropdownButtonFormField<String>(
+            //   value: selectedHealth,
+            //   items: const [
+            //     DropdownMenuItem(
+            //       value: 'Standard',
+            //       child: Text('Standard'),
+            //     ),
+            //     DropdownMenuItem(
+            //       value: 'Arthritis',
+            //       child: Text('Arthritis'),
+            //     ),
+            //     DropdownMenuItem(
+            //       value: 'Weight-reduction',
+            //       child: Text('Weight-reduction'),
+            //     ),
+            //     DropdownMenuItem(
+            //       value: 'Diabetic',
+            //       child: Text('Diabetic'),
+            //     ),
+            //     DropdownMenuItem(
+            //       value: 'Vegan',
+            //       child: Text('Vegan'),
+            //     ),
+            //   ],
+            //   onChanged: (value) {
+            //     setState(
+            //       () {
+            //         selectedHealth = value;
+            //       },
+            //     );
+            //   },
+            //   decoration: const InputDecoration(
+            //     labelText: 'Select a health option', // set the label text
+            //     border: OutlineInputBorder(), // add an outline border
+            //     contentPadding: EdgeInsets.symmetric(
+            //         horizontal: 10, vertical: 10), // add padding
+            //   ),
+            // ),
+            const SizedBox(
+              height: 15,
+            ),
+            Container(
+              height: 50,
+              margin: const EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(10),
               ),
-              const SizedBox(
-                height: 15,
-              ),
-              SizedBox(
-                width: double.infinity,
-                height: 100.0,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: <Widget>[
-                    //Chicken
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                        image: DecorationImage(
-                          image: const AssetImage(
-                            'assets/Chicken.jpg',
-                          ),
-                          fit: BoxFit.fill,
-                          colorFilter: ColorFilter.mode(
-                              Colors.grey.withOpacity(0.3), BlendMode.dstATop),
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const ChickenPage(),
-                          //   ),
-                          // );
-                        },
-                        child: const Text(
-                          'Chicken',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //pork container
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        image: DecorationImage(
-                          image: const AssetImage(
-                            'assets/pork.jpg',
-                          ),
-                          fit: BoxFit.fill,
-                          colorFilter: ColorFilter.mode(
-                              Colors.grey.withOpacity(0.3), BlendMode.dstATop),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const PorkPage(),
-                          //   ),
-                          // );
-                        },
-                        child: const Text(
-                          'Pork',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //vegetable container
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        image: DecorationImage(
-                          image: const AssetImage(
-                            'assets/vegetable.jpg',
-                          ),
-                          fit: BoxFit.fill,
-                          colorFilter: ColorFilter.mode(
-                              Colors.grey.withOpacity(0.5), BlendMode.dstATop),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const VegetablePage(),
-                          //   ),
-                          // );
-                        },
-                        child: const Text(
-                          'Vegetable',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //dessert container
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        image: DecorationImage(
-                          image: const AssetImage(
-                            'assets/dessert.jpg',
-                          ),
-                          fit: BoxFit.fill,
-                          colorFilter: ColorFilter.mode(
-                              Colors.grey.withOpacity(0.5), BlendMode.dstATop),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const DessertPage(),
-                          //   ),
-                          // );
-                        },
-                        child: const Text(
-                          'Dessert',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //egg container
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        image: DecorationImage(
-                          image: const AssetImage(
-                            'assets/egg.jpg',
-                          ),
-                          fit: BoxFit.fill,
-                          colorFilter: ColorFilter.mode(
-                              Colors.grey.withOpacity(0.5), BlendMode.dstATop),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const EggPage(),
-                          //   ),
-                          // );
-                        },
-                        child: const Text(
-                          'Egg',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //beef container
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        image: DecorationImage(
-                          image: const AssetImage(
-                            'assets/beef.jpg',
-                          ),
-                          fit: BoxFit.fill,
-                          colorFilter: ColorFilter.mode(
-                              Colors.grey.withOpacity(0.5), BlendMode.dstATop),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const BeefPage(),
-                          //   ),
-                          // );
-                        },
-                        child: const Text(
-                          'Beef',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //fish container
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        image: DecorationImage(
-                          image: const AssetImage(
-                            'assets/fish.jpg',
-                          ),
-                          fit: BoxFit.fill,
-                          colorFilter: ColorFilter.mode(
-                              Colors.grey.withOpacity(0.5), BlendMode.dstATop),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const BeefPage(),
-                          //   ),
-                          // );
-                        },
-                        child: const Text(
-                          'Fish',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
-                    ),
-                    //rice
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //rice container
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        image: DecorationImage(
-                          image: const AssetImage(
-                            'assets/rice.jpg',
-                          ),
-                          fit: BoxFit.fill,
-                          colorFilter: ColorFilter.mode(
-                              Colors.grey.withOpacity(0.5), BlendMode.dstATop),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const BeefPage(),
-                          //   ),
-                          // );
-                        },
-                        child: const Text(
-                          'Rice',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
-                    ),
-                    //soup
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //soup container
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        image: DecorationImage(
-                          image: const AssetImage(
-                            'assets/soup.jpg',
-                          ),
-                          fit: BoxFit.fill,
-                          colorFilter: ColorFilter.mode(
-                              Colors.grey.withOpacity(0.5), BlendMode.dstATop),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const BeefPage(),
-                          //   ),
-                          // );
-                        },
-                        child: const Text(
-                          'Soup',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
-                    ),
-                    //seafood
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //seafood container
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        image: DecorationImage(
-                          image: const AssetImage(
-                            'assets/seafood.jpg',
-                          ),
-                          fit: BoxFit.fill,
-                          colorFilter: ColorFilter.mode(
-                              Colors.grey.withOpacity(0.5), BlendMode.dstATop),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const BeefPage(),
-                          //   ),
-                          // );
-                        },
-                        child: const Text(
-                          'Seafood',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              // Select diet row
-              const SizedBox(
-                height: 15,
-              ),
-              Row(
-                children: [
-                  const Text(
-                    'Select Diet Option',
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.normal,
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(),
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: const Text('optional'),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              // Select Diet option row
-              SizedBox(
-                width: double.infinity,
-                height: 100.0,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: <Widget>[
-                    //Standard
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                        // image: DecorationImage(
-                        //   image: const AssetImage(
-                        //     'assets/Chicken.jpg',
-                        //   ),
-                        //   fit: BoxFit.fill,
-                        //   colorFilter: ColorFilter.mode(
-                        //       Colors.grey.withOpacity(0.3), BlendMode.dstATop),
-                        // ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const ChickenPage(),
-                          //   ),
-                          // );
-                        },
-                        child: const Text(
-                          'Standard',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //Diabetic container
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        // image: DecorationImage(
-                        //   image: const AssetImage(
-                        //     'assets/pork.jpg',
-                        //   ),
-                        //   fit: BoxFit.fill,
-                        //   colorFilter: ColorFilter.mode(
-                        //       Colors.grey.withOpacity(0.3), BlendMode.dstATop),
-                        // ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const PorkPage(),
-                          //   ),
-                          // );
-                        },
-                        child: const Text(
-                          'Diabetic',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //Arthritis container
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        // image: DecorationImage(
-                        //   image: const AssetImage(
-                        //     'assets/vegetable.jpg',
-                        //   ),
-                        //   fit: BoxFit.fill,
-                        //   colorFilter: ColorFilter.mode(
-                        //       Colors.grey.withOpacity(0.5), BlendMode.dstATop),
-                        // ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const VegetablePage(),
-                          //   ),
-                          // );
-                        },
-                        child: const Text(
-                          'Arthritis',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //Weight-reduction container
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        // image: DecorationImage(
-                        //   image: const AssetImage(
-                        //     'assets/dessert.jpg',
-                        //   ),
-                        //   fit: BoxFit.fill,
-                        //   colorFilter: ColorFilter.mode(
-                        //       Colors.grey.withOpacity(0.5), BlendMode.dstATop),
-                        // ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const DessertPage(),
-                          //   ),
-                          // );
-                        },
-                        child: const Text(
-                          'Weight-reduction',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    //Vegan container
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                        // image: DecorationImage(
-                        //   image: const AssetImage(
-                        //     'assets/egg.jpg',
-                        //   ),
-                        //   fit: BoxFit.fill,
-                        //   colorFilter: ColorFilter.mode(
-                        //       Colors.grey.withOpacity(0.5), BlendMode.dstATop),
-                        // ),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
-                        ),
-                      ),
-                      width: 160.0,
-                      // color: Colors.red,
-                      child: TextButton(
-                        onPressed: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const EggPage(),
-                          //   ),
-                          // );
-                        },
-                        child: const Text(
-                          'Vegan',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                  ],
-                ),
-              ),
-              // Select Ingredients Row
-              const SizedBox(
-                height: 15,
-              ),
-              Row(
-                children: [
-                  const Text(
-                    'Other Ingredients',
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      fontStyle: FontStyle.normal,
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(),
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: const Text('optional'),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-
-              TextField(
+              child: TextField(
                 textCapitalization: TextCapitalization.sentences,
                 onChanged: (value) {
-                  setState(() {});
+                  setState(() {
+                    // _scrollController.animateTo(0,
+                    //     duration: const Duration(milliseconds: 500),
+                    //     curve: Curves.ease);
+                  });
                 },
-                controller: null,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(
+                controller: _searchController,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  prefixIcon: const Icon(
                     Icons.search,
                   ),
-                  hintText: "Type ingredient name",
-                ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              // Find recipe button
-              ElevatedButton(
-                onPressed: (() {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ResultPage(),
-                    ),
-                  );
-                }),
-                style: ButtonStyle(
-                  minimumSize: MaterialStateProperty.all(const Size(150, 50)),
-                ),
-                child: const Text(
-                  'Find Recipe >',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontStyle: FontStyle.normal,
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.clear),
+                    onPressed: () {
+                      setState(() {
+                        _searchController.clear();
+                      });
+                    },
+                  ),
+                  hintText: 'Type your ingredients',
+                  hintStyle: const TextStyle(
+                    color: Colors.grey,
+                    fontSize: 16,
                   ),
                 ),
-              )
-            ], // MAIN CHILDREN of COLUMN
-          ), // MAIN COLUMN (BODY)
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            Expanded(
+              child: StreamBuilder<QuerySnapshot>(
+                stream: _dishes
+                    .orderBy('name', descending: false)
+                    // .where('category', isEqualTo: selectedCategory)
+                    .where('keyIngredients',
+                        arrayContainsAny: _searchController.text.split(', '))
+                    // .where(
+                    //   'diet',
+                    //   arrayContains: selectedHealth,
+                    // )
+                    .snapshots(), //connects to DB //build connection
+                builder:
+                    (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                  if (streamSnapshot.hasData &&
+                      streamSnapshot.data!.docs.isNotEmpty) {
+                    return Stack(children: [
+                      ListView.builder(
+                        //controller: _scrollController,
+                        shrinkWrap: true,
+                        //physics: const NeverScrollableScrollPhysics(),
+                        itemCount: streamSnapshot.data!.docs.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final DocumentSnapshot documentSnapshot =
+                              streamSnapshot.data!.docs[index];
+
+                          return Container(
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.1),
+                                  spreadRadius: 2,
+                                  blurRadius: 5,
+                                  offset: const Offset(
+                                      0, 3), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                            margin: const EdgeInsets.symmetric(
+                              vertical: 2.0,
+                              horizontal: 10.0,
+                            ),
+                            child: Card(
+                              elevation: 2,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              shadowColor: Colors.grey,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 10.0,
+                                  horizontal: 10.0,
+                                ),
+                                child: Column(
+                                  children: [
+                                    ListTile(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => DetailPage(
+                                              documentSnapshot:
+                                                  documentSnapshot,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      leading: Container(
+                                        height: 100,
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                          image: DecorationImage(
+                                            image: NetworkImage(
+                                                documentSnapshot['imgUrl']),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                      title: Text(
+                                        documentSnapshot['name'],
+                                        style: const TextStyle(
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      subtitle: Text(
+                                        documentSnapshot['category'],
+                                        style: const TextStyle(
+                                          fontSize: 16.0,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ]);
+                  }
+                  return const Center(
+                    child: Text('No cuisine or recipe found'),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
-      ), // MAIN CONTAINER (BODY)
+      ),
     );
   }
 }
+
+/**
+ * This code assumes that _searchController is a TextEditingController that 
+ * holds a comma-separated list of values that you want to search for in the 
+ * keyIngredients field. If _searchController is not a TextEditingController, 
+ * you can modify the code to use the appropriate variable.
+
+By using whereIn instead of arrayContains, you can pass a list of values 
+to search for instead of a single value, which allows you to perform the 
+same filtering operation without using multiple array-contains clauses.
+ */
