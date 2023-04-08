@@ -41,13 +41,13 @@ class _ChickenPageState extends State<ChickenPage> {
   bool _showFloatingButton = false;
 
 //chips for filtering chicken diet options
-  // String? _selectedDiet = 'Standard';
-  // final List<String> _dietOptions = const [
-  //   'Standard',
-  //   'Arthritis',
-  //   'Diabetic',
-  //   'Weight-reduction'
-  // ];
+  String? _selectedDiet = 'Standard';
+  final List<String> _dietOptions = const [
+    'Standard',
+    'Arthritis',
+    'Diabetic',
+    'Weight-reduction'
+  ];
 
   String? selectedHealthOption = 'Standard';
 
@@ -115,29 +115,35 @@ class _ChickenPageState extends State<ChickenPage> {
                 ),
               ),
             ),
-            // filter chips
-            // Center(
-            //   child: Wrap(
-            //     runAlignment: WrapAlignment.spaceEvenly,
-            //     clipBehavior: Clip.antiAlias,
-            //     spacing: 2.0,
-            //     children: _dietOptions.map((option) {
-            //       return FilterChip(
-            //         label: Text(option),
-            //         selected: _selectedDiet == option,
-            //         onSelected: (selected) {
-            //           setState(() {
-            //             _selectedDiet = selected ? option : 'Standard';
-            //           });
-            //         },
-            //       );
-            //     }).toList(),
-            //   ),
-            // ),
+            //filter chips
+
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Wrap(
+                  runAlignment: WrapAlignment.spaceEvenly,
+                  clipBehavior: Clip.antiAlias,
+                  spacing: 2.0,
+                  children: _dietOptions.map((option) {
+                    return FilterChip(
+                      label: Text(option),
+                      selected: _selectedDiet == option,
+                      onSelected: (selected) {
+                        setState(() {
+                          _selectedDiet = selected ? option : 'Standard';
+                        });
+                      },
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+
             const SizedBox(
               height: 10,
             ),
-            Text("Selected diet: $selectedHealthOption"),
+            Text("Selected diet: $_selectedDiet"),
             const SizedBox(
               height: 10,
             ),
@@ -147,7 +153,7 @@ class _ChickenPageState extends State<ChickenPage> {
                 stream: _dishes
                     .orderBy('name', descending: false)
                     .where("category", isEqualTo: "Chicken")
-                    .where('diet', arrayContains: selectedHealthOption)
+                    .where('diet', arrayContains: _selectedDiet)
                     .snapshots(), //connects to DB //build connection
 
                 builder:
