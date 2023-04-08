@@ -62,30 +62,30 @@ class _RicePageState extends State<RicePage> {
         ),
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(color: Colors.black),
-        actions: <Widget>[
-          PopupMenuButton<String>(
-            icon: const Icon(Icons.filter_list),
-            onSelected: (String value) {
-              setState(() {
-                selectedHealthOption = value;
-              });
-            },
-            itemBuilder: (BuildContext context) {
-              return {
-                'Standard',
-                'Arthritis',
-                'Diabetic',
-                'Weight-reduction',
-                'Vegan',
-              }.map((String choice) {
-                return PopupMenuItem<String>(
-                  value: choice,
-                  child: Text(choice),
-                );
-              }).toList();
-            },
-          ),
-        ],
+        // actions: <Widget>[
+        //   PopupMenuButton<String>(
+        //     icon: const Icon(Icons.filter_list),
+        //     onSelected: (String value) {
+        //       setState(() {
+        //         selectedHealthOption = value;
+        //       });
+        //     },
+        //     itemBuilder: (BuildContext context) {
+        //       return {
+        //         'Standard',
+        //         'Arthritis',
+        //         'Diabetic',
+        //         'Weight-reduction',
+        //         'Vegan',
+        //       }.map((String choice) {
+        //         return PopupMenuItem<String>(
+        //           value: choice,
+        //           child: Text(choice),
+        //         );
+        //       }).toList();
+        //     },
+        //   ),
+        // ],
       ),
       body: Container(
         padding: const EdgeInsets.only(
