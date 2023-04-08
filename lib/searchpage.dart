@@ -82,6 +82,7 @@ class _SearchPageState extends State<SearchPage> {
               ),
               child: TextField(
                 textCapitalization: TextCapitalization.sentences,
+                autofocus: true,
                 onChanged: (value) {
                   setState(() {
                     // _scrollController.animateTo(0,
