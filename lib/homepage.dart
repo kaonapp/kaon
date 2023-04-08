@@ -21,6 +21,7 @@ import 'dietPage/diabeticpage.dart';
 import 'dietPage/standardpage.dart';
 import 'dietPage/veganpage.dart';
 import 'dietPage/weightpage.dart';
+import 'filteringpage.dart';
 import 'lists/list_model.dart';
 
 class HomePage extends StatefulWidget {
@@ -74,13 +75,13 @@ class _HomePageState extends State<HomePage> {
           ),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const FilterPage()));
+              },
               icon: const Icon(Icons.kitchen),
-              color: Colors.black,
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.info),
               color: Colors.black,
             ),
           ],
