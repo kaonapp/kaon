@@ -40,12 +40,14 @@ class _SeafoodPageState extends State<SeafoodPage> {
 
   //chips for filtering Seafood diet options
   // String? _selectedDiet = 'Standard';
-  // final List<String> _dietOptions = const [
-  //   'Standard',
-  //   'Arthritis',
-  //   'Diabetic',
-  //   'Weight-reduction'
-  // ];
+  final List<String> _selectedDiet = ['Standard'];
+
+  final List<String> _dietOptions = const [
+    'Standard',
+    'Arthritis',
+    'Diabetic',
+    'Weight-reduction'
+  ];
 
   String? selectedHealthOption = 'Standard';
 
@@ -113,28 +115,46 @@ class _SeafoodPageState extends State<SeafoodPage> {
                 ),
               ),
             ),
-            // Center(
-            //   child: Wrap(
-            //     runAlignment: WrapAlignment.spaceEvenly,
-            //     clipBehavior: Clip.antiAlias,
-            //     spacing: 2.0,
-            //     children: _dietOptions.map((option) {
-            //       return FilterChip(
-            //         label: Text(option),
-            //         selected: _selectedDiet == option,
-            //         onSelected: (selected) {
-            //           setState(() {
-            //             _selectedDiet = selected ? option : 'Standard';
-            //           });
-            //         },
-            //       );
-            //     }).toList(),
-            //   ),
-            // ),
+            //filter chips
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Wrap(
+                  runAlignment: WrapAlignment.spaceEvenly,
+                  clipBehavior: Clip.antiAlias,
+                  spacing: 2.0,
+                  children: _dietOptions.map((option) {
+                    return FilterChip(
+                      label: Text(option),
+                      checkmarkColor: Colors.green,
+                      showCheckmark: true, // add showCheckmark property
+                      selectedColor: const Color.fromARGB(255, 253, 216, 192),
+                      selected: _selectedDiet.contains(option), // fix here
+
+                      onSelected: (selected) {
+                        setState(() {
+                          if (selected) {
+                            if (_selectedDiet.length < 2) {
+                              _selectedDiet.add(option);
+                            } else {
+                              _selectedDiet[0] = _selectedDiet[1];
+                              _selectedDiet[1] = option;
+                            }
+                          } else {
+                            _selectedDiet.remove(option);
+                          }
+                        });
+                      },
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
             const SizedBox(
               height: 10,
             ),
-            Text("Selected diet: $selectedHealthOption"),
+            Text("Selected diet: ${_selectedDiet.join(', ')}"),
             const SizedBox(
               height: 10,
             ),
@@ -144,7 +164,7 @@ class _SeafoodPageState extends State<SeafoodPage> {
                 stream: _dishes
                     .orderBy('name', descending: false)
                     .where("category", isEqualTo: "Seafood")
-                    .where('diet', arrayContains: selectedHealthOption)
+                    .where('diet', arrayContainsAny: _selectedDiet)
                     .snapshots(), //connects to DB //build connection
 
                 builder:
