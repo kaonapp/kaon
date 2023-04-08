@@ -51,7 +51,7 @@ class _FilterPageState extends State<FilterPage> {
           ),
         ),
         title: const Text(
-          '',
+          'Fridge',
           style: TextStyle(
             color: Colors.black,
           ),
@@ -64,112 +64,112 @@ class _FilterPageState extends State<FilterPage> {
         child: Column(
           children: [
             // const Text('select category:'),
-            Stack(children: [
-              DropdownButtonFormField<String>(
-                elevation: 16,
-                decoration: const InputDecoration(
-                  labelText: 'Select a category', // set the label text
-                  border: OutlineInputBorder(), // add an outline border
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 10,
-                  ), // add padding
-                ),
-                value: selectedCategory,
-                items: const [
-                  DropdownMenuItem(
-                    value: null,
-                    child: Text('All'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Chicken',
-                    child: Text('Chicken'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Egg',
-                    child: Text('Egg'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Beef',
-                    child: Text('Beef'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Dessert',
-                    child: Text('Dessert'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Fish',
-                    child: Text('Fish'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Rice and alternatives',
-                    child: Text('Rice and alternative'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Seafood',
-                    child: Text('Seafood'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Soup',
-                    child: Text('Soup'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Vegetable',
-                    child: Text('Vegetable'),
-                  ),
-                ],
-                onChanged: (value) {
-                  setState(
-                    () {
-                      selectedCategory = value;
-                    },
-                  );
-                },
-              ),
-            ]),
-            const SizedBox(
-              height: 20,
-            ),
+            // Stack(children: [
+            //   DropdownButtonFormField<String>(
+            //     elevation: 16,
+            //     decoration: const InputDecoration(
+            //       labelText: 'Select a category', // set the label text
+            //       border: OutlineInputBorder(), // add an outline border
+            //       contentPadding: EdgeInsets.symmetric(
+            //         horizontal: 10,
+            //         vertical: 10,
+            //       ), // add padding
+            //     ),
+            //     value: selectedCategory,
+            //     items: const [
+            //       DropdownMenuItem(
+            //         value: null,
+            //         child: Text('All'),
+            //       ),
+            //       DropdownMenuItem(
+            //         value: 'Chicken',
+            //         child: Text('Chicken'),
+            //       ),
+            //       DropdownMenuItem(
+            //         value: 'Egg',
+            //         child: Text('Egg'),
+            //       ),
+            //       DropdownMenuItem(
+            //         value: 'Beef',
+            //         child: Text('Beef'),
+            //       ),
+            //       DropdownMenuItem(
+            //         value: 'Dessert',
+            //         child: Text('Dessert'),
+            //       ),
+            //       DropdownMenuItem(
+            //         value: 'Fish',
+            //         child: Text('Fish'),
+            //       ),
+            //       DropdownMenuItem(
+            //         value: 'Rice and alternatives',
+            //         child: Text('Rice and alternative'),
+            //       ),
+            //       DropdownMenuItem(
+            //         value: 'Seafood',
+            //         child: Text('Seafood'),
+            //       ),
+            //       DropdownMenuItem(
+            //         value: 'Soup',
+            //         child: Text('Soup'),
+            //       ),
+            //       DropdownMenuItem(
+            //         value: 'Vegetable',
+            //         child: Text('Vegetable'),
+            //       ),
+            //     ],
+            //     onChanged: (value) {
+            //       setState(
+            //         () {
+            //           selectedCategory = value;
+            //         },
+            //       );
+            //     },
+            //   ),
+            // ]),
+            // const SizedBox(
+            //   height: 20,
+            // ),
             //health option
             // const Text('select health option:'),
-            DropdownButtonFormField<String>(
-              value: selectedHealth,
-              items: const [
-                DropdownMenuItem(
-                  value: 'Standard',
-                  child: Text('Standard'),
-                ),
-                DropdownMenuItem(
-                  value: 'Arthritis',
-                  child: Text('Arthritis'),
-                ),
-                DropdownMenuItem(
-                  value: 'Weight-reduction',
-                  child: Text('Weight-reduction'),
-                ),
-                DropdownMenuItem(
-                  value: 'Diabetic',
-                  child: Text('Diabetic'),
-                ),
-                DropdownMenuItem(
-                  value: 'Vegan',
-                  child: Text('Vegan'),
-                ),
-              ],
-              onChanged: (value) {
-                setState(
-                  () {
-                    selectedHealth = value;
-                  },
-                );
-              },
-              decoration: const InputDecoration(
-                labelText: 'Select a health option', // set the label text
-                border: OutlineInputBorder(), // add an outline border
-                contentPadding: EdgeInsets.symmetric(
-                    horizontal: 10, vertical: 10), // add padding
-              ),
-            ),
+            // DropdownButtonFormField<String>(
+            //   value: selectedHealth,
+            //   items: const [
+            //     DropdownMenuItem(
+            //       value: 'Standard',
+            //       child: Text('Standard'),
+            //     ),
+            //     DropdownMenuItem(
+            //       value: 'Arthritis',
+            //       child: Text('Arthritis'),
+            //     ),
+            //     DropdownMenuItem(
+            //       value: 'Weight-reduction',
+            //       child: Text('Weight-reduction'),
+            //     ),
+            //     DropdownMenuItem(
+            //       value: 'Diabetic',
+            //       child: Text('Diabetic'),
+            //     ),
+            //     DropdownMenuItem(
+            //       value: 'Vegan',
+            //       child: Text('Vegan'),
+            //     ),
+            //   ],
+            //   onChanged: (value) {
+            //     setState(
+            //       () {
+            //         selectedHealth = value;
+            //       },
+            //     );
+            //   },
+            //   decoration: const InputDecoration(
+            //     labelText: 'Select a health option', // set the label text
+            //     border: OutlineInputBorder(), // add an outline border
+            //     contentPadding: EdgeInsets.symmetric(
+            //         horizontal: 10, vertical: 10), // add padding
+            //   ),
+            // ),
             const SizedBox(
               height: 15,
             ),
@@ -217,10 +217,10 @@ class _FilterPageState extends State<FilterPage> {
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
                 stream: _dishes
-                    // .orderBy('name', descending: false)
-                    .where('category', isEqualTo: selectedCategory)
+                    .orderBy('name', descending: false)
+                    // .where('category', isEqualTo: selectedCategory)
                     .where('keyIngredients',
-                        whereIn: _searchController.text.split(','))
+                        arrayContainsAny: _searchController.text.split(', '))
                     // .where(
                     //   'diet',
                     //   arrayContains: selectedHealth,
