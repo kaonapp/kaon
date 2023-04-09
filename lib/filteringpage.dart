@@ -247,7 +247,7 @@ class _FilterPageState extends State<FilterPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const Text('Your ingredients: '),
+                  //const Text('Your ingredients: '),
                   Wrap(
                     runAlignment: WrapAlignment.spaceEvenly,
                     clipBehavior: Clip.antiAlias,
@@ -256,7 +256,13 @@ class _FilterPageState extends State<FilterPage> {
                       ingredientsList.length,
                       (index) {
                         return FilterChip(
-                          label: Text(ingredientsList[index]),
+                          label: Row(
+                            children: [
+                              const Icon(Icons.clear, size: 16),
+                              const SizedBox(width: 4),
+                              Text(ingredientsList[index]),
+                            ],
+                          ),
                           onSelected: (isSelected) {
                             setState(() {
                               ingredientsList.removeAt(index);
