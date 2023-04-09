@@ -65,14 +65,11 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          elevation: 0,
-          leading: const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: CircleAvatar(
-              //kaon logo here
-              backgroundImage: AssetImage('assets/splash.png'),
-            ),
+          title: Image.asset(
+            'assets/kaon_text.png',
+            height: 60, // set the desired height of the logo
           ),
+          elevation: 0,
           actions: [
             IconButton(
               onPressed: () {
@@ -1539,13 +1536,39 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            // _scrollController.animateTo(0,
-            //     duration: const Duration(milliseconds: 500),
-            //     curve: Curves.easeInOut);
-          },
-          child: const Icon(Icons.menu_book_sharp),
+        floatingActionButton: Material(
+          elevation: 6.0, // Set the elevation to 6.0
+
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(35.0),
+          child: Container(
+            width: 70.0,
+            height: 70.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(35.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 6.0,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
+            child: FloatingActionButton(
+              onPressed: () {
+                // _scrollController.animateTo(0,
+                //     duration: const Duration(milliseconds: 500),
+                //     curve: Curves.easeInOut);
+              },
+
+              elevation: 6.0, // Set the elevation to 6.0
+              child: Image.asset(
+                'assets/tutorial.png',
+                fit: BoxFit
+                    .fill, // Use BoxFit.fill to fill the image to the size of the FloatingActionButton
+              ),
+            ),
+          ),
         ));
   }
 }

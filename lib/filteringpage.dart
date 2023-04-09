@@ -19,23 +19,26 @@ class _FilterPageState extends State<FilterPage> {
   final CollectionReference _dishes =
       FirebaseFirestore.instance.collection('dishes');
   //List<String> selectedFilters = [];
-  final TextEditingController _searchController = TextEditingController();
+  final TextEditingController _ingredientsController = TextEditingController();
 
-  String? selectedCategory;
-  String? selectedHealth = 'Standard';
+  // String? selectedCategory;
+  // String? selectedHealth = 'Standard';
+
+  // Set initial value for ingredients
+  List<String> ingredientsList = ['your ingredients'];
 
   @override
   void initState() {
     super.initState();
-    _searchController.addListener(_onSearchChanged);
+    _ingredientsController.addListener(_onSearchChanged);
   }
 
   void _onSearchChanged() {}
 
   @override
   void dispose() {
-    _searchController.removeListener(_onSearchChanged);
-    _searchController.dispose();
+    _ingredientsController.removeListener(_onSearchChanged);
+    _ingredientsController.dispose();
     super.dispose();
   }
 
@@ -180,37 +183,104 @@ class _FilterPageState extends State<FilterPage> {
                 color: Colors.grey[200],
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: TextField(
-                textCapitalization: TextCapitalization.sentences,
-                onChanged: (value) {
-                  setState(() {
-                    // _scrollController.animateTo(0,
-                    //     duration: const Duration(milliseconds: 500),
-                    //     curve: Curves.ease);
-                  });
-                },
-                controller: _searchController,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  prefixIcon: const Icon(
-                    Icons.search,
-                  ),
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.clear),
-                    onPressed: () {
-                      setState(() {
-                        _searchController.clear();
-                      });
-                    },
-                  ),
-                  hintText: 'Type your ingredients',
-                  hintStyle: const TextStyle(
-                    color: Colors.grey,
-                    fontSize: 16,
-                  ),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    TextField(
+                      textCapitalization: TextCapitalization.sentences,
+                      onChanged: (value) {
+                        setState(() {
+                          // _scrollController.animateTo(0,
+                          //     duration: const Duration(milliseconds: 500),
+                          //     curve: Curves.ease);
+                        });
+                      },
+                      controller: _ingredientsController,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        prefixIcon: const Icon(
+                          Icons.search,
+                        ),
+                        // suffixIcon: IconButton(
+                        //   icon: const Icon(Icons.clear),
+                        //   onPressed: () {
+                        //     setState(() {
+                        //       _ingredientsController.clear();
+                        //     });
+                        //   },
+                        // ),
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              print(ingredientsList);
+                              String newIngredient =
+                                  _ingredientsController.text.trim();
+                              if (newIngredient.isNotEmpty) {
+                                setState(() {
+                                  print('Adding ingredient: $newIngredient');
+                                  ingredientsList.add(newIngredient);
+                                  _ingredientsController.clear();
+                                });
+                              }
+                            });
+                          },
+                          icon: const Icon(Icons.add),
+                        ),
+                        hintText: 'Type your ingredients',
+                        hintStyle: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                  ],
                 ),
               ),
             ),
+
+            const SizedBox(
+              height: 15,
+            ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  //const Text('Your ingredients: '),
+                  Wrap(
+                    runAlignment: WrapAlignment.spaceEvenly,
+                    clipBehavior: Clip.antiAlias,
+                    spacing: 8,
+                    children: List<Widget>.generate(
+                      ingredientsList.length,
+                      (index) {
+                        return FilterChip(
+                          label: Row(
+                            children: [
+                              const Icon(Icons.clear, size: 16),
+                              const SizedBox(width: 4),
+                              Text(ingredientsList[index]),
+                            ],
+                          ),
+                          onSelected: (isSelected) {
+                            setState(() {
+                              ingredientsList.removeAt(index);
+                            });
+                          },
+                        );
+                      },
+                    ).toList(),
+                  ),
+                ],
+              ),
+            ),
+            // Row(
+            //   children: const [
+            //     Text("Selected ingredients: "),
+            //   ],
+            // ),
+
             const SizedBox(
               height: 15,
             ),
@@ -219,8 +289,7 @@ class _FilterPageState extends State<FilterPage> {
                 stream: _dishes
                     .orderBy('name', descending: false)
                     // .where('category', isEqualTo: selectedCategory)
-                    .where('keyIngredients',
-                        arrayContainsAny: _searchController.text.split(', '))
+                    .where('keyIngredients', arrayContainsAny: ingredientsList)
                     // .where(
                     //   'diet',
                     //   arrayContains: selectedHealth,
@@ -331,9 +400,9 @@ class _FilterPageState extends State<FilterPage> {
 }
 
 /**
- * This code assumes that _searchController is a TextEditingController that 
+ * This code assumes that _ingredientsController is a TextEditingController that 
  * holds a comma-separated list of values that you want to search for in the 
- * keyIngredients field. If _searchController is not a TextEditingController, 
+ * keyIngredients field. If _ingredientsController is not a TextEditingController, 
  * you can modify the code to use the appropriate variable.
 
 By using whereIn instead of arrayContains, you can pass a list of values 
