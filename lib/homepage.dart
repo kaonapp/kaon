@@ -13,6 +13,8 @@ import 'package:ui/categoryPage/vegetablepage.dart';
 import 'package:ui/categorypage.dart';
 import 'package:ui/detailpage.dart';
 import 'package:ui/searchpage.dart';
+import 'package:ui/tutorial_page.dart';
+import 'package:ui/views/onboarding_page.dart';
 
 import 'categoryPage/beefpage.dart';
 import 'categoryPage/chickenpage.dart';
@@ -1556,6 +1558,10 @@ class _HomePageState extends State<HomePage> {
             ),
             child: FloatingActionButton(
               onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const TutorialPage()));
                 // _scrollController.animateTo(0,
                 //     duration: const Duration(milliseconds: 500),
                 //     curve: Curves.easeInOut);
