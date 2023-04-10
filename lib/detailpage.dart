@@ -1,10 +1,10 @@
 // ignore_for_file: sized_box_for_whitespace, prefer_interpolation_to_compose_strings, deprecated_member_use, use_build_context_synchronously
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-//import 'package:flutter/gestures.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-//import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetailPage extends StatefulWidget {
   final DocumentSnapshot documentSnapshot;
@@ -195,6 +195,23 @@ class _DetailPageState extends State<DetailPage> {
                             children: [
                               Text(procedureList),
                             ],
+                          ),
+                          Center(
+                            child: Text.rich(
+                              TextSpan(
+                                //style: DefaultTextStyle.of(context).style,
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: 'See more',
+                                    style: const TextStyle(color: Colors.blue),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        launch(widget.documentSnapshot['link']);
+                                      },
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                         ],
                       ),
