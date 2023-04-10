@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:ui/fridge_tutorial.dart';
 // import 'package:get/utils.dart';
 // import 'package:ui/resultPage.dart';
 
@@ -393,6 +394,44 @@ class _FilterPageState extends State<FilterPage> {
               ),
             ),
           ],
+        ),
+      ),
+      floatingActionButton: Material(
+        elevation: 6.0, // Set the elevation to 6.0
+
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(35.0),
+        child: Container(
+          width: 70.0,
+          height: 70.0,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(35.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 6.0,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const FridgeTutorial()));
+              // _scrollController.animateTo(0,
+              //     duration: const Duration(milliseconds: 500),
+              //     curve: Curves.easeInOut);
+            },
+
+            elevation: 6.0, // Set the elevation to 6.0
+            child: Image.asset(
+              'assets/tutorial.png',
+              fit: BoxFit
+                  .fill, // Use BoxFit.fill to fill the image to the size of the FloatingActionButton
+            ),
+          ),
         ),
       ),
     );

@@ -5,6 +5,8 @@ import 'package:ui/controllers/onboarding_controller.dart';
 
 class OnboardingPage extends StatelessWidget {
   final _controller = OnboardingController();
+
+  OnboardingPage({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,29 +18,27 @@ class OnboardingPage extends StatelessWidget {
                 onPageChanged: _controller.selectedPageIndex,
                 itemCount: _controller.onboardingPages.length,
                 itemBuilder: (context, index) {
-                  return Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                            _controller.onboardingPages[index].imageAsset),
-                        SizedBox(height: 32),
-                        Text(
-                          _controller.onboardingPages[index].title,
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.w500),
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                          _controller.onboardingPages[index].imageAsset),
+                      const SizedBox(height: 32),
+                      Text(
+                        _controller.onboardingPages[index].title,
+                        style: const TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.w500),
+                      ),
+                      const SizedBox(height: 32),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 64.0),
+                        child: Text(
+                          _controller.onboardingPages[index].description,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(fontSize: 18),
                         ),
-                        SizedBox(height: 32),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 64.0),
-                          child: Text(
-                            _controller.onboardingPages[index].description,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   );
                 }),
             Positioned(
@@ -54,7 +54,7 @@ class OnboardingPage extends StatelessWidget {
                       height: 12,
                       decoration: BoxDecoration(
                         color: _controller.selectedPageIndex.value == index
-                            ? Color.fromRGBO(246, 107, 14, 1)
+                            ? const Color.fromRGBO(246, 107, 14, 1)
                             : Colors.grey,
                         shape: BoxShape.circle,
                       ),

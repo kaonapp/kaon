@@ -4,7 +4,7 @@ import 'package:ui/dietPage/arthritispage.dart';
 import 'package:ui/dietPage/diabeticpage.dart';
 import 'package:ui/dietPage/standardpage.dart';
 import 'package:ui/dietPage/weightpage.dart';
-import 'package:ui/tutorial_page.dart';
+import 'package:ui/fridge_tutorial.dart';
 import 'detailpage.dart';
 import 'dietPage/veganpage.dart';
 
@@ -732,7 +732,7 @@ class _HealthPageState extends State<HealthPage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const TutorialPage()));
+                        builder: (context) => const FridgeTutorial()));
                 // _scrollController.animateTo(0,
                 //     duration: const Duration(milliseconds: 500),
                 //     curve: Curves.easeInOut);
