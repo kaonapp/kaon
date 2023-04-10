@@ -188,7 +188,7 @@ class _FilterPageState extends State<FilterPage> {
                 child: Column(
                   children: [
                     TextField(
-                      textCapitalization: TextCapitalization.sentences,
+                      //textCapitalization: TextCapitalization.sentences,
                       onChanged: (value) {
                         setState(() {
                           // _scrollController.animateTo(0,
