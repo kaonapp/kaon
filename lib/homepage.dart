@@ -12,6 +12,7 @@ import 'package:ui/categoryPage/souppage.dart';
 import 'package:ui/categoryPage/vegetablepage.dart';
 import 'package:ui/categorypage.dart';
 import 'package:ui/detailpage.dart';
+import 'package:ui/health_page.dart';
 import 'package:ui/searchpage.dart';
 import 'package:ui/tutorial_page.dart';
 import 'package:ui/views/onboarding_page.dart';
@@ -159,14 +160,38 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(height: 20),
 
                 // Health option section
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Text(
-                    'Health Options',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Health Options',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const HealthPage(),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          'View All',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey.withOpacity(
+                                0.7), // Set the color to grey with an opacity of 0.7
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(height: 10),

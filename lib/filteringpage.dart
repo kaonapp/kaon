@@ -212,12 +212,12 @@ class _FilterPageState extends State<FilterPage> {
                         suffixIcon: IconButton(
                           onPressed: () {
                             setState(() {
-                              print(ingredientsList);
+                              //print(ingredientsList);
                               String newIngredient =
                                   _ingredientsController.text.trim();
                               if (newIngredient.isNotEmpty) {
                                 setState(() {
-                                  print('Adding ingredient: $newIngredient');
+                                  //print('Adding ingredient: $newIngredient');
                                   ingredientsList.add(newIngredient);
                                   _ingredientsController.clear();
                                 });
