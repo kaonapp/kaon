@@ -5,6 +5,8 @@ import 'package:ui/dietPage/standardpage.dart';
 import 'package:ui/dietPage/veganpage.dart';
 import 'package:ui/dietPage/weightpage.dart';
 
+import 'health_tutorial.dart';
+
 class HealthPage extends StatefulWidget {
   const HealthPage({super.key});
 
@@ -38,8 +40,8 @@ class _HealthPageState extends State<HealthPage> {
           Container(
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              children: const [
-                Center(
+              children: [
+                const Center(
                   child: Text(
                     'Invest in your Wellbeing: Browse our Health Options Plans Today',
                     style:
@@ -48,18 +50,19 @@ class _HealthPageState extends State<HealthPage> {
                   ),
                 ),
                 //navigate to health info
-                // TextButton(
-                //   onPressed: () {
-                //     Navigator.push(
-                //       context,
-                //       MaterialPageRoute(builder: (context) => HealthTuts()),
-                //     );
-                //   },
-                //   child: Text(
-                //     'Click here for more info',
-                //     style: TextStyle(fontSize: 18.0, color: Colors.grey),
-                //   ),
-                // ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HealthTuts()),
+                    );
+                  },
+                  child: const Text(
+                    'Click here for more info',
+                    style: TextStyle(fontSize: 18.0, color: Colors.grey),
+                  ),
+                ),
               ],
             ),
           ),
