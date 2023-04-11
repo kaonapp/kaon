@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                   MaterialPageRoute(builder: (context) => const FilterPage()));
             },
             child: Image.asset(
-              'assets/fridge_icon.png',
+              'assets/fridge.png',
               height: 30, // set the desired height of the image
             ),
           ),
