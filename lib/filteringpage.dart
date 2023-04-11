@@ -448,3 +448,14 @@ By using whereIn instead of arrayContains, you can pass a list of values
 to search for instead of a single value, which allows you to perform the 
 same filtering operation without using multiple array-contains clauses.
  */
+
+/**
+ * The content-base filtering algorithm is applied in the following lines of code:
+ * 
+ * .where('keyIngredients', arrayContainsAny: ingredientsList)
+ *   ^
+ * This code filters the dishes by using the keyIngredients field in the database and
+ *  searching for elements that are contained in the ingredientsList. This is an example
+ *  of content-based filtering, where the algorithm searches through the content of the
+ *  dish to find matching items based on the user's inputted ingredients.
+ */
