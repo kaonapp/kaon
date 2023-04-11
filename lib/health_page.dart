@@ -86,15 +86,28 @@ class _HealthPageState extends State<HealthPage> {
                 child: Container(
                   height: 200,
                   decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.7),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset:
+                            const Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
                     borderRadius: BorderRadius.circular(10),
                     image: const DecorationImage(
-                      image: AssetImage('assets/health.gif'),
+                      image: AssetImage('assets/health_page/standard.jpg'),
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
               ),
             ),
+          ),
+
+          const SizedBox(
+            height: 10,
           ),
 
           //vegan
@@ -116,15 +129,28 @@ class _HealthPageState extends State<HealthPage> {
                 child: Container(
                   height: 200,
                   decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.7),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset:
+                            const Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
                     borderRadius: BorderRadius.circular(10),
                     image: const DecorationImage(
-                      image: AssetImage('assets/health.gif'),
+                      image: AssetImage('assets/health_page/vegan.jpg'),
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
               ),
             ),
+          ),
+
+          const SizedBox(
+            height: 10,
           ),
 
           //diabetic
@@ -146,15 +172,28 @@ class _HealthPageState extends State<HealthPage> {
                 child: Container(
                   height: 200,
                   decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.7),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset:
+                            const Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
                     borderRadius: BorderRadius.circular(10),
                     image: const DecorationImage(
-                      image: AssetImage('assets/health.gif'),
+                      image: AssetImage('assets/health_page/diabetic.jpg'),
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
               ),
             ),
+          ),
+
+          const SizedBox(
+            height: 10,
           ),
 
           //arthritis
@@ -176,15 +215,28 @@ class _HealthPageState extends State<HealthPage> {
                 child: Container(
                   height: 200,
                   decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.7),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset:
+                            const Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
                     borderRadius: BorderRadius.circular(10),
                     image: const DecorationImage(
-                      image: AssetImage('assets/health.gif'),
+                      image: AssetImage('assets/health_page/arthritis.jpg'),
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
               ),
             ),
+          ),
+
+          const SizedBox(
+            height: 10,
           ),
 
           //weight reduction
@@ -206,9 +258,18 @@ class _HealthPageState extends State<HealthPage> {
                 child: Container(
                   height: 200,
                   decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.7),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset:
+                            const Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
                     borderRadius: BorderRadius.circular(10),
                     image: const DecorationImage(
-                      image: AssetImage('assets/health.gif'),
+                      image: AssetImage('assets/health_page/weight.jpg'),
                       fit: BoxFit.cover,
                     ),
                   ),
