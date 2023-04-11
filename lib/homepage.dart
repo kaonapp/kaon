@@ -73,13 +73,15 @@ class _HomePageState extends State<HomePage> {
         ),
         elevation: 0,
         actions: [
-          IconButton(
-            onPressed: () {
+          GestureDetector(
+            onTap: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const FilterPage()));
             },
-            icon: const Icon(Icons.kitchen),
-            color: Colors.black,
+            child: Image.asset(
+              'assets/fridge_icon.png',
+              height: 30, // set the desired height of the image
+            ),
           ),
         ],
       ),

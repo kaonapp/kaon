@@ -60,7 +60,10 @@ class _HealthPageState extends State<HealthPage> {
                   },
                   child: const Text(
                     'Click here for more info',
-                    style: TextStyle(fontSize: 18.0, color: Colors.grey),
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      color: Color(0xFFF66B0E),
+                    ),
                   ),
                 ),
               ],
