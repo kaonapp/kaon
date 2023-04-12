@@ -85,3 +85,10 @@ const List categoryPage = [
   DessertPage(),
   SeafoodPage(),
 ];
+
+// home banner carousel images
+const List homeBannerImage = [
+  'assets/banners/home_banner/home_banner.jpg',
+  'assets/banners/home_banner/home_banner.jpg',
+  'assets/banners/home_banner/home_banner.jpg',
+];
