@@ -14,7 +14,9 @@ class _HealthTutsState extends State<HealthTuts> {
   int _currentPageIndex = 0;
 
   final List<Widget> _onboardingPages = [
-    _buildOnboardingPage('assets/health.gif', 'Explore Your Health Options',
+    _buildOnboardingPage(
+        'assets/health_tuts/standard.gif',
+        'Explore Your Health Options',
         'Our app offers a wide variety of health option to choose from. Whether you are looking for food that is for diabetic, arthritis, weight-reduction,vegan or just standard diet, weve got you covered. '),
     _buildOnboardingPage(
         'assets/health_tuts/standard.jpg',
