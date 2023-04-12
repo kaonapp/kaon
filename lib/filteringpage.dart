@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:ui/fridge_tutorial.dart';
 // import 'package:get/utils.dart';
 // import 'package:ui/resultPage.dart';
 
@@ -187,7 +188,7 @@ class _FilterPageState extends State<FilterPage> {
                 child: Column(
                   children: [
                     TextField(
-                      textCapitalization: TextCapitalization.sentences,
+                      //textCapitalization: TextCapitalization.sentences,
                       onChanged: (value) {
                         setState(() {
                           // _scrollController.animateTo(0,
@@ -395,6 +396,44 @@ class _FilterPageState extends State<FilterPage> {
           ],
         ),
       ),
+      floatingActionButton: Material(
+        elevation: 6.0, // Set the elevation to 6.0
+
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(35.0),
+        child: Container(
+          width: 70.0,
+          height: 70.0,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(35.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 6.0,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const FridgeTutorial()));
+              // _scrollController.animateTo(0,
+              //     duration: const Duration(milliseconds: 500),
+              //     curve: Curves.easeInOut);
+            },
+
+            elevation: 6.0, // Set the elevation to 6.0
+            child: Image.asset(
+              'assets/tutorial.png',
+              fit: BoxFit
+                  .fill, // Use BoxFit.fill to fill the image to the size of the FloatingActionButton
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -408,4 +447,15 @@ class _FilterPageState extends State<FilterPage> {
 By using whereIn instead of arrayContains, you can pass a list of values 
 to search for instead of a single value, which allows you to perform the 
 same filtering operation without using multiple array-contains clauses.
+ */
+
+/**
+ * The content-base filtering algorithm is applied in the following lines of code:
+ * 
+ * .where('keyIngredients', arrayContainsAny: ingredientsList)
+ *   ^
+ * This code filters the dishes by using the keyIngredients field in the database and
+ *  searching for elements that are contained in the ingredientsList. This is an example
+ *  of content-based filtering, where the algorithm searches through the content of the
+ *  dish to find matching items based on the user's inputted ingredients.
  */

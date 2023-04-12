@@ -69,6 +69,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
+    - assets/health_tuts/
+    - assets/health_page/
     - assets/banners/home_banner/
     - assets/banners/banner_per_page/
     - assets/banners/category_banner/
