@@ -72,6 +72,7 @@ flutter:
     - assets/
     - assets/health_tuts/
     - assets/general_tuts/
+    - assets/fridge_tuts/
     - assets/health_page/
     - assets/banners/home_banner/
     - assets/banners/banner_per_page/

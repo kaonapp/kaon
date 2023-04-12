@@ -13,20 +13,26 @@ class _FridgeTutorialState extends State<FridgeTutorial> {
   int _currentPageIndex = 0;
 
   final List<Widget> _onboardingPages = [
-    _buildOnboardingPage('assets/fridge.gif', 'Get Started with Our Fridge',
-        'Our fridge app helps users keep track of the ingredients they have in their kitchen by allowing them to input them into the app. This makes it easier for users to know what they have available to cook with and can help them plan meals more efficiently.'),
     _buildOnboardingPage(
-        'assets/typing.gif',
-        'Type your available ingredients in your house',
-        'Our searching process will guide you through the simple steps of typing in your available ingredients and finding delicious, creative recipes to make at home.'),
+      'assets/fridge_tuts/get.gif',
+      'Get Started with Our Fridge',
+      'Our fridge app helps users keep track of the ingredients they have in their kitchen by allowing them to input them into the app. This makes it easier for users to know what they have available to cook with and can help them plan meals more efficiently.',
+    ),
     _buildOnboardingPage(
-        'assets/add.gif',
-        'Press the add button to get all the dishes that use the ingredients you entered',
-        'All you need to do is enter the ingredients you have on hand and press the add button. Our fridge platform will guide you through adding ingredients and show you all the dishes that use those ingredients.'),
+      'assets/fridge_tuts/type.gif',
+      'Type your available ingredients in your house',
+      'Our searching process will guide you through the simple steps of typing in your available ingredients and finding delicious, creative recipes to make at home.',
+    ),
     _buildOnboardingPage(
-        'assets/dish.gif',
-        'Select the dish you desire to cook',
-        'Browse through our menu and select the dish that catches your eye. Once youve made your choice, well guide you through the cooking process step-by-step, providing helpful tips and tricks along the way'),
+      'assets/fridge_tuts/press.gif',
+      'Press the add button to get all the dishes that use the ingredients you entered',
+      'All you need to do is enter the ingredients you have on hand and press the add button. Our fridge platform will guide you through adding ingredients and show you all the dishes that use those ingredients.',
+    ),
+    _buildOnboardingPage(
+      'assets/fridge_tuts/select.gif',
+      'Select the dish you desire to cook',
+      'Browse through our menu and select the dish that catches your eye. Once youve made your choice, well guide you through the cooking process step-by-step, providing helpful tips and tricks along the way',
+    ),
   ];
 
   @override
