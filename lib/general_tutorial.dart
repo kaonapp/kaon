@@ -14,18 +14,31 @@ class _GeneralTutorialState extends State<GeneralTutorial> {
   int _currentPageIndex = 0;
 
   final List<Widget> _onboardingPages = [
-    _buildOnboardingPage('assets/test.gif', 'Find the Perfect Dish for You!',
-        'Our app makes it easy to find the perfect recipe for any occasion. With our advanced search options, you can filter recipes by cuisine, ingredients, cooking time, and more. Say goodbye to endless scrolling and hello to delicious meals!'),
-    _buildOnboardingPage('assets/dish.gif', 'Choose Your Desire Dish',
-        'Our app offers a wide variety of dishes to choose from, so you can easily find and pick your favorite meals with just a few taps. '),
-    _buildOnboardingPage('assets/health.gif', 'Explore Your Health Options',
-        'Our app offers a wide variety of health option to choose from. Whether you are looking for food that is for diabetic, arthritis, weight-reduction,vegan or just standard diet, weve got you covered. '),
-    _buildOnboardingPage('assets/fridge.gif', 'Get Started with Our Fridge',
-        'Our fridge app helps users keep track of the ingredients they have in their kitchen by allowing them to input them into the app. This makes it easier for users to know what they have available to cook with and can help them plan meals more efficiently.'),
     _buildOnboardingPage(
-        'assets/categ.gif',
-        'Explore Delicious Recipes by Category',
-        'Our app offers a range of categories for you to choose from when searching for recipes, including chicken, pork, beef, fish, desserts, vegetables, seafood, soups, rice and alternatives, and eggs.'),
+      'assets/general_tuts/choose.gif',
+      'Choose Your Desire Dish',
+      'Our app offers a wide variety of dishes to choose from, so you can easily find and pick your favorite meals with just a few taps. ',
+    ),
+    _buildOnboardingPage(
+      'assets/general_tuts/find.gif',
+      'Find the Perfect Dish for You!',
+      'Our app makes it easy to find the perfect recipe for any occasion. With our advanced search options, you can filter recipes by cuisine, ingredients, cooking time, and more. Say goodbye to endless scrolling and hello to delicious meals!',
+    ),
+    _buildOnboardingPage(
+      'assets/general_tuts/explore.gif',
+      'Explore Your Health Options',
+      'Our app offers a wide variety of health option to choose from. Whether you are looking for food that is for diabetic, arthritis, weight-reduction,vegan or just standard diet, weve got you covered. ',
+    ),
+    _buildOnboardingPage(
+      'assets/general_tuts/get.gif',
+      'Get Started with Our Fridge',
+      'Our fridge app helps users keep track of the ingredients they have in their kitchen by allowing them to input them into the app. This makes it easier for users to know what they have available to cook with and can help them plan meals more efficiently.',
+    ),
+    _buildOnboardingPage(
+      'assets/general_tuts/delicious.gif',
+      'Explore Delicious Recipes by Category',
+      'Our app offers a range of categories for you to choose from when searching for recipes, including chicken, pork, beef, fish, desserts, vegetables, seafood, soups, rice and alternatives, and eggs.',
+    ),
   ];
 
   @override

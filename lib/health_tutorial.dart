@@ -14,28 +14,36 @@ class _HealthTutsState extends State<HealthTuts> {
   int _currentPageIndex = 0;
 
   final List<Widget> _onboardingPages = [
-    _buildOnboardingPage('assets/health.gif', 'Explore Your Health Options',
-        'Our app offers a wide variety of health option to choose from. Whether you are looking for food that is for diabetic, arthritis, weight-reduction,vegan or just standard diet, weve got you covered. '),
     _buildOnboardingPage(
-        'assets/health_tuts/standard.jpg',
-        'Learn About Our Standard Diet Plan for a Healthier You',
-        'Discover Our Standard Diet Plan for a Balanced and Nutritious Eating Habit. Our Program is Tailored to Meet Your Health Goals and Backed by Registered Dietitians and Health Professionals.'),
+      'assets/health_tuts/explore.gif',
+      'Explore Your Health Options',
+      'Our app offers a wide variety of health option to choose from. Whether you are looking for food that is for diabetic, arthritis, weight-reduction,vegan or just standard diet, weve got you covered. ',
+    ),
     _buildOnboardingPage(
-        'assets/health_tuts/diabetic.jpg',
-        'Managing Diabetes with Our Balanced Diabetic Diet Plan',
-        'If you have diabetes, we offer specialized Diabetic Diets that are designed to help you manage your blood sugar levels and improve your overall health. Our Diabetic Diets focus on avoiding dishes with high sugar content, and our experienced dietitians will work with you to create a personalized plan that meets your unique nutritional needs.'),
+      'assets/health_tuts/standard.gif',
+      'Learn About Our Standard Diet Plan for a Healthier You',
+      'Discover Our Standard Diet Plan for a Balanced and Nutritious Eating Habit. Our Program is Tailored to Meet Your Health Goals and Backed by Registered Dietitians and Health Professionals.',
+    ),
     _buildOnboardingPage(
-        'assets/health_tuts/arthritis.jpg',
-        'Managing Arthritis with a Comprehensive and Evidence-Based Approach.',
-        'We offer specialized Arthritis Diets that can help reduce inflammation and manage your symptoms. Our Arthritis Diets focus on avoiding seafood and dishes that use beef as their main ingredient. We also highly recommend avoiding fatty and oily foods as they can trigger inflammation in the body.'),
+      'assets/health_tuts/diabetic.gif',
+      'Managing Diabetes with Our Balanced Diabetic Diet Plan',
+      'If you have diabetes, we offer specialized Diabetic Diets that are designed to help you manage your blood sugar levels and improve your overall health. Our Diabetic Diets focus on avoiding dishes with high sugar content, and our experienced dietitians will work with you to create a personalized plan that meets your unique nutritional needs.',
+    ),
     _buildOnboardingPage(
-        'assets/health_tuts/weight.jpg',
-        'Your Pathway to Successful Weight Reduction with Tailored Programs and Expert Support',
-        'Looking to lose weight? Our Weight Reduction Diets are designed to help you achieve your weight loss goals by providing less fatty dishes that are still delicious and satisfying. Our program is based on the latest research and guidelines in weight management'),
+      'assets/health_tuts/arthritis.gif',
+      'Managing Arthritis with a Comprehensive and Evidence-Based Approach.',
+      'We offer specialized Arthritis Diets that can help reduce inflammation and manage your symptoms. Our Arthritis Diets focus on avoiding seafood and dishes that use beef as their main ingredient. We also highly recommend avoiding fatty and oily foods as they can trigger inflammation in the body.',
+    ),
     _buildOnboardingPage(
-        'assets/health_tuts/vegan.jpg',
-        'Nourishing Your Body and Mind with a Vegan Diet',
-        ' Achieve a Healthier and More Sustainable Lifestyle with Our Vegan Programs Tailored to Meet Your Needs. Our Experienced Dietitians will Help You Create a Personalized Plan that Avoids Red Meat, Chicken, Fish, Eggs, and Dairy Products.'),
+      'assets/health_tuts/weight.gif',
+      'Your Pathway to Successful Weight Reduction with Tailored Programs and Expert Support',
+      'Looking to lose weight? Our Weight Reduction Diets are designed to help you achieve your weight loss goals by providing less fatty dishes that are still delicious and satisfying. Our program is based on the latest research and guidelines in weight management',
+    ),
+    _buildOnboardingPage(
+      'assets/health_tuts/vegan.gif',
+      'Nourishing Your Body and Mind with a Vegan Diet',
+      ' Achieve a Healthier and More Sustainable Lifestyle with Our Vegan Programs Tailored to Meet Your Needs. Our Experienced Dietitians will Help You Create a Personalized Plan that Avoids Red Meat, Chicken, Fish, Eggs, and Dairy Products.',
+    ),
   ];
 
   @override

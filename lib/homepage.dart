@@ -16,6 +16,7 @@ import 'package:ui/general_tutorial.dart';
 import 'package:ui/health_page.dart';
 import 'package:ui/searchpage.dart';
 import 'package:ui/views/onboarding_page.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'categoryPage/beefpage.dart';
 import 'categoryPage/chickenpage.dart';
 import 'dietPage/arthritispage.dart';
@@ -91,28 +92,53 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 // Banner image
-              Container(
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.7),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: const Offset(0, 3), // changes position of shadow
-                    ),
-                  ],
-                ),
-                margin: const EdgeInsets.all(12.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: const Image(
-                    image: AssetImage(
-                      'assets/banners/home_banner/home_banner.jpg',
-                    ),
-                    fit: BoxFit.cover,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CarouselSlider(
+                  options: CarouselOptions(
+                    height: 200,
+                    autoPlay: true,
+                    enlargeCenterPage: true,
+                    aspectRatio: 16 / 9,
+                    autoPlayCurve: Curves.fastOutSlowIn,
+                    enableInfiniteScroll: true,
+                    autoPlayAnimationDuration:
+                        const Duration(milliseconds: 350),
+                    viewportFraction: 0.8,
                   ),
+                  items: homeBannerImage
+                      .map(
+                        (item) => Container(
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.3),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: const Offset(
+                                  0,
+                                  3,
+                                ), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                          margin: const EdgeInsets.all(1.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Image(
+                              image: AssetImage(
+                                item,
+                              ),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      )
+                      .toList(),
                 ),
               ),
+
+              const SizedBox(height: 15),
 
 // Search button -----
               const Padding(
