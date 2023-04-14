@@ -1571,18 +1571,18 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: Container(
         width: 70.0,
         height: 70.0,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(35.0),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.3),
-              blurRadius: 6.0,
-              offset: const Offset(0, 3),
-            ),
-          ],
-        ),
+        // decoration: BoxDecoration(
+        //   borderRadius: BorderRadius.circular(35.0),
+        //   boxShadow: [
+        //     BoxShadow(
+        //       color: Colors.black.withOpacity(0.3),
+        //       blurRadius: 6.0,
+        //       offset: const Offset(0, 3),
+        //     ),
+        //   ],
+        // ),
         child: FloatingActionButton(
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.white,
           onPressed: () {
             Navigator.push(
                 context,
@@ -1593,7 +1593,7 @@ class _HomePageState extends State<HomePage> {
             //     curve: Curves.easeInOut);
           },
 
-          elevation: 6.0, // Set the elevation to 6.0
+          //  elevation: 6.0, // Set the elevation to 6.0
           child: Image.asset(
             'assets/information.gif',
             fit: BoxFit
