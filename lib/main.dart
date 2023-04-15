@@ -2,12 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:ui/categoryPage/chickenpage.dart';
-import 'package:ui/categorypage.dart';
-import 'package:ui/homepage.dart';
+import 'package:ui/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:ui/searchpage.dart';
+import 'package:ui/search_page.dart';
 import 'package:ui/views/onboarding_page.dart';
-import 'filteringpage.dart';
 import 'firebase_options.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 

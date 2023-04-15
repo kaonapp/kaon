@@ -2,7 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:ui/detailpage.dart';
+import 'package:ui/detail_page.dart';
 
 class ChickenPage extends StatefulWidget {
   const ChickenPage({super.key});

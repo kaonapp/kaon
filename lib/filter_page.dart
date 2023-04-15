@@ -4,7 +4,7 @@ import 'package:ui/fridge_tutorial.dart';
 // import 'package:get/utils.dart';
 // import 'package:ui/resultPage.dart';
 
-import 'detailpage.dart';
+import 'detail_page.dart';
 
 //import 'categorypage.dart';
 

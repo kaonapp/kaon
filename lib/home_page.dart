@@ -10,11 +10,11 @@ import 'package:ui/categoryPage/ricepage.dart';
 import 'package:ui/categoryPage/seafoodpage.dart';
 import 'package:ui/categoryPage/souppage.dart';
 import 'package:ui/categoryPage/vegetablepage.dart';
-import 'package:ui/categorypage.dart';
-import 'package:ui/detailpage.dart';
+import 'package:ui/detail_page.dart';
+import 'package:ui/filter_page.dart';
 import 'package:ui/general_tutorial.dart';
 import 'package:ui/health_page.dart';
-import 'package:ui/searchpage.dart';
+import 'package:ui/search_page.dart';
 import 'package:ui/views/onboarding_page.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'categoryPage/beefpage.dart';
@@ -24,8 +24,8 @@ import 'dietPage/diabeticpage.dart';
 import 'dietPage/standardpage.dart';
 import 'dietPage/veganpage.dart';
 import 'dietPage/weightpage.dart';
-import 'filteringpage.dart';
 import 'lists/list_model.dart';
+
 import 'dart:math';
 
 class HomePage extends StatefulWidget {

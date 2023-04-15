@@ -3,7 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import 'detailpage.dart';
+import 'detail_page.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});

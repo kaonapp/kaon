@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../detailpage.dart';
+import '../detail_page.dart';
 
 class DiabeticPage extends StatefulWidget {
   const DiabeticPage({super.key});

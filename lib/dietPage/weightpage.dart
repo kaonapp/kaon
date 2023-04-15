@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../detailpage.dart';
+import '../detail_page.dart';
 
 class WeightPage extends StatefulWidget {
   const WeightPage({super.key});
