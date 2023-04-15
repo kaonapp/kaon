@@ -1,7 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages, unused_local_variable, no_leading_underscores_for_local_identifiers, unused_import
 
 import 'package:flutter/material.dart';
-import 'package:ui/categoryPage/chickenpage.dart';
+import 'package:ui/categoryPage/chicken_page.dart';
 import 'package:ui/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:ui/search_page.dart';

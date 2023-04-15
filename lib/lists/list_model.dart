@@ -1,19 +1,19 @@
-import 'package:ui/categoryPage/beefpage.dart';
-import 'package:ui/categoryPage/chickenpage.dart';
-import 'package:ui/categoryPage/dessertpage.dart';
-import 'package:ui/categoryPage/eggpage.dart';
-import 'package:ui/categoryPage/fishpage.dart';
-import 'package:ui/categoryPage/porkpage.dart';
-import 'package:ui/categoryPage/ricepage.dart';
-import 'package:ui/categoryPage/seafoodpage.dart';
-import 'package:ui/categoryPage/souppage.dart';
-import 'package:ui/categoryPage/vegetablepage.dart';
+import 'package:ui/categoryPage/beef_page.dart';
+import 'package:ui/categoryPage/chicken_page.dart';
+import 'package:ui/categoryPage/dessert_page.dart';
+import 'package:ui/categoryPage/egg_page.dart';
+import 'package:ui/categoryPage/fish_page.dart';
+import 'package:ui/categoryPage/pork_page.dart';
+import 'package:ui/categoryPage/rice_page.dart';
+import 'package:ui/categoryPage/sea_foodpage.dart';
+import 'package:ui/categoryPage/soup_page.dart';
+import 'package:ui/categoryPage/vegetable_page.dart';
 
-import '../dietPage/arthritispage.dart';
-import '../dietPage/diabeticpage.dart';
-import '../dietPage/standardpage.dart';
-import '../dietPage/veganpage.dart';
-import '../dietPage/weightpage.dart';
+import '../dietPage/arthritis_page.dart';
+import '../dietPage/diabetic_page.dart';
+import '../dietPage/standard_page.dart';
+import '../dietPage/vegan_page.dart';
+import '../dietPage/weight_page.dart';
 
 // all list data
 
