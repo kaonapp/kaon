@@ -88,7 +88,8 @@ const List categoryPage = [
 
 // home banner carousel images
 const List homeBannerImage = [
-  'assets/banners/home_banner/home_banner.jpg',
-  'assets/banners/home_banner/home_banner.jpg',
-  'assets/banners/home_banner/home_banner.jpg',
+  'assets/home_carousel/home_banner.png',
+  'assets/home_carousel/home_banner2.png',
+  'assets/home_carousel/home_banner3.png',
+  'assets/home_carousel/home_banner4.png',
 ];

@@ -35,6 +35,22 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+class CurveClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    path.lineTo(0, size.height - 50);
+    path.quadraticBezierTo(
+        size.width / 2, size.height, size.width, size.height - 50);
+    path.lineTo(size.width, 0);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
+
 class _HomePageState extends State<HomePage> {
   // reference for collection/table in db (REQUIRED!)
   final CollectionReference _dishes =
@@ -110,19 +126,6 @@ class _HomePageState extends State<HomePage> {
                   items: homeBannerImage
                       .map(
                         (item) => Container(
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.3),
-                                spreadRadius: 2,
-                                blurRadius: 5,
-                                offset: const Offset(
-                                  0,
-                                  3,
-                                ), // changes position of shadow
-                              ),
-                            ],
-                          ),
                           margin: const EdgeInsets.all(1.0),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10.0),
@@ -130,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                               image: AssetImage(
                                 item,
                               ),
-                              fit: BoxFit.cover,
+                              fit: BoxFit.contain,
                             ),
                           ),
                         ),
