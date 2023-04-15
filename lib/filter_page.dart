@@ -74,7 +74,8 @@ class _FilterPageState extends State<FilterPage> {
                 DropdownButtonFormField<String>(
                   elevation: 16,
                   decoration: const InputDecoration(
-                    labelText: 'Main ingredient', // set the label text
+                    labelText:
+                        'Main ingredient (optional)', // set the label text
                     border: OutlineInputBorder(), // add an outline border
                     contentPadding: EdgeInsets.symmetric(
                       horizontal: 10,
