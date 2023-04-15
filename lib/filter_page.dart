@@ -414,36 +414,23 @@ class _FilterPageState extends State<FilterPage> {
           ],
         ),
       ),
-      floatingActionButton: SizedBox(
-        width: 70.0,
-        height: 70.0,
-        // decoration: BoxDecoration(
-        //   borderRadius: BorderRadius.circular(35.0),
-        //   boxShadow: [
-        //     BoxShadow(
-        //       color: Colors.black.withOpacity(0.3),
-        //       blurRadius: 6.0,
-        //       offset: const Offset(0, 3),
-        //     ),
-        //   ],
-        // ),
+      floatingActionButton: Container(
+        width: 80.0,
+        height: 80.0,
         child: FloatingActionButton(
           backgroundColor: Colors.white,
           onPressed: () {
             Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const FridgeTutorial()));
-            // _scrollController.animateTo(0,
-            //     duration: const Duration(milliseconds: 500),
-            //     curve: Curves.easeInOut);
+              context,
+              MaterialPageRoute(builder: (context) => const FridgeTutorial()),
+            );
           },
-
-          //  elevation: 6.0, // Set the elevation to 6.0
           child: Image.asset(
             'assets/information.gif',
+            width: 60.0, // Set the width to 50.0
+            height: 60.0, // Set the height to 50.0
             fit: BoxFit
-                .fill, // Use BoxFit.fill to fill the image to the size of the FloatingActionButton
+                .cover, // Use BoxFit.cover to scale the image while maintaining its aspect ratio
           ),
         ),
       ),
