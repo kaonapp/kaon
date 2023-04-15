@@ -104,27 +104,67 @@ class _DetailPageState extends State<DetailPage> {
                         ),
                       ),
                       const SizedBox(height: 12),
-                      Text(
-                        'Category: ${widget.documentSnapshot['category']}',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.grey[600],
+                      // Display category
+                      RichText(
+                        text: TextSpan(
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey[600],
+                          ),
+                          children: [
+                            const TextSpan(
+                              text: 'Category: ',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            TextSpan(
+                              text: '${widget.documentSnapshot['category']}',
+                            ),
+                          ],
                         ),
                       ),
                       const SizedBox(height: 8),
-                      Text(
-                        'Health Option: ${widget.documentSnapshot['diet'].join(', ')}',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.grey[600],
+                      // Display Health Option
+                      RichText(
+                        text: TextSpan(
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey[600],
+                          ),
+                          children: [
+                            const TextSpan(
+                              text: 'Health Option: ',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            TextSpan(
+                              text:
+                                  '${widget.documentSnapshot['diet'].join(', ')}',
+                            ),
+                          ],
                         ),
                       ),
                       const SizedBox(height: 8),
-                      Text(
-                        'Cook time: ${widget.documentSnapshot['cookTime']} minutes',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.grey[600],
+                      // Display cooking time
+                      RichText(
+                        text: TextSpan(
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey[600],
+                          ),
+                          children: [
+                            const TextSpan(
+                              text: 'Cooking Time: ',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            TextSpan(
+                              text: '${widget.documentSnapshot['cookTime']}',
+                            ),
+                          ],
                         ),
                       ),
                       const SizedBox(height: 16),
@@ -193,7 +233,13 @@ class _DetailPageState extends State<DetailPage> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(procedureList),
+                              Text(
+                                procedureList,
+                                textAlign: TextAlign.justify,
+                                style: const TextStyle(
+                                  height: 1.5,
+                                ),
+                              ),
                             ],
                           ),
                           Center(
