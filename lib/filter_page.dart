@@ -55,7 +55,7 @@ class _FilterPageState extends State<FilterPage> {
         //   ),
         // ),
         title: const Text(
-          'Basket',
+          'Fridge',
           style: TextStyle(
             color: Colors.black,
           ),
@@ -74,7 +74,7 @@ class _FilterPageState extends State<FilterPage> {
                 DropdownButtonFormField<String>(
                   elevation: 16,
                   decoration: const InputDecoration(
-                    labelText: 'Select a category', // set the label text
+                    labelText: 'Main ingredient', // set the label text
                     border: OutlineInputBorder(), // add an outline border
                     contentPadding: EdgeInsets.symmetric(
                       horizontal: 10,
@@ -414,7 +414,7 @@ class _FilterPageState extends State<FilterPage> {
           ],
         ),
       ),
-      floatingActionButton: Container(
+      floatingActionButton: SizedBox(
         width: 80.0,
         height: 80.0,
         child: FloatingActionButton(
