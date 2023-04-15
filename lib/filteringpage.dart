@@ -22,11 +22,11 @@ class _FilterPageState extends State<FilterPage> {
   //List<String> selectedFilters = [];
   final TextEditingController _ingredientsController = TextEditingController();
 
-  // String? selectedCategory;
+  String? selectedCategory;
   // String? selectedHealth = 'Standard';
 
   // Set initial value for ingredients
-  List<String> ingredientsList = ['your ingredients'];
+  late List<String> ingredientsList = ['your ingredients'];
 
   @override
   void initState() {
@@ -55,7 +55,7 @@ class _FilterPageState extends State<FilterPage> {
         //   ),
         // ),
         title: const Text(
-          'Fridge',
+          'Basket',
           style: TextStyle(
             color: Colors.black,
           ),
@@ -68,69 +68,72 @@ class _FilterPageState extends State<FilterPage> {
         child: Column(
           children: [
             // const Text('select category:'),
-            // Stack(children: [
-            //   DropdownButtonFormField<String>(
-            //     elevation: 16,
-            //     decoration: const InputDecoration(
-            //       labelText: 'Select a category', // set the label text
-            //       border: OutlineInputBorder(), // add an outline border
-            //       contentPadding: EdgeInsets.symmetric(
-            //         horizontal: 10,
-            //         vertical: 10,
-            //       ), // add padding
-            //     ),
-            //     value: selectedCategory,
-            //     items: const [
-            //       DropdownMenuItem(
-            //         value: null,
-            //         child: Text('All'),
-            //       ),
-            //       DropdownMenuItem(
-            //         value: 'Chicken',
-            //         child: Text('Chicken'),
-            //       ),
-            //       DropdownMenuItem(
-            //         value: 'Egg',
-            //         child: Text('Egg'),
-            //       ),
-            //       DropdownMenuItem(
-            //         value: 'Beef',
-            //         child: Text('Beef'),
-            //       ),
-            //       DropdownMenuItem(
-            //         value: 'Dessert',
-            //         child: Text('Dessert'),
-            //       ),
-            //       DropdownMenuItem(
-            //         value: 'Fish',
-            //         child: Text('Fish'),
-            //       ),
-            //       DropdownMenuItem(
-            //         value: 'Rice and alternatives',
-            //         child: Text('Rice and alternative'),
-            //       ),
-            //       DropdownMenuItem(
-            //         value: 'Seafood',
-            //         child: Text('Seafood'),
-            //       ),
-            //       DropdownMenuItem(
-            //         value: 'Soup',
-            //         child: Text('Soup'),
-            //       ),
-            //       DropdownMenuItem(
-            //         value: 'Vegetable',
-            //         child: Text('Vegetable'),
-            //       ),
-            //     ],
-            //     onChanged: (value) {
-            //       setState(
-            //         () {
-            //           selectedCategory = value;
-            //         },
-            //       );
-            //     },
-            //   ),
-            // ]),
+            Stack(
+              children: [
+                // Dropdown selection for Category
+                DropdownButtonFormField<String>(
+                  elevation: 16,
+                  decoration: const InputDecoration(
+                    labelText: 'Select a category', // set the label text
+                    border: OutlineInputBorder(), // add an outline border
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 10,
+                    ), // add padding
+                  ),
+                  value: selectedCategory,
+                  items: const [
+                    DropdownMenuItem(
+                      value: null,
+                      child: Text('Others'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'Chicken',
+                      child: Text('Chicken'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'Egg',
+                      child: Text('Egg'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'Beef',
+                      child: Text('Beef'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'Dessert',
+                      child: Text('Dessert'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'Fish',
+                      child: Text('Fish'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'Rice and alternatives',
+                      child: Text('Rice and alternative'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'Seafood',
+                      child: Text('Seafood'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'Soup',
+                      child: Text('Soup'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'Vegetable',
+                      child: Text('Vegetable'),
+                    ),
+                  ],
+                  onChanged: (value) {
+                    setState(
+                      () {
+                        selectedCategory = value;
+                      },
+                    );
+                  },
+                ),
+              ],
+            ),
             // const SizedBox(
             //   height: 20,
             // ),
@@ -304,7 +307,7 @@ class _FilterPageState extends State<FilterPage> {
               child: StreamBuilder<QuerySnapshot>(
                 stream: _dishes
                     .orderBy('name', descending: false)
-                    // .where('category', isEqualTo: selectedCategory)
+                    .where('category', isEqualTo: selectedCategory)
                     .where('keyIngredients', arrayContainsAny: ingredientsList)
                     // .where(
                     //   'diet',
@@ -411,7 +414,7 @@ class _FilterPageState extends State<FilterPage> {
           ],
         ),
       ),
-      floatingActionButton: Container(
+      floatingActionButton: SizedBox(
         width: 70.0,
         height: 70.0,
         // decoration: BoxDecoration(
