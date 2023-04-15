@@ -162,7 +162,8 @@ class _DetailPageState extends State<DetailPage> {
                               ),
                             ),
                             TextSpan(
-                              text: '${widget.documentSnapshot['cookTime']}',
+                              text:
+                                  '${widget.documentSnapshot['cookTime']} minutes',
                             ),
                           ],
                         ),
