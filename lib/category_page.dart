@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-import 'categoryPage/beefpage.dart';
-import 'categoryPage/chickenpage.dart';
-import 'categoryPage/dessertpage.dart';
-import 'categoryPage/eggpage.dart';
-import 'categoryPage/fishpage.dart';
-import 'categoryPage/porkpage.dart';
-import 'categoryPage/ricepage.dart';
-import 'categoryPage/seafoodpage.dart';
-import 'categoryPage/souppage.dart';
-import 'categoryPage/vegetablepage.dart';
+import 'categoryPage/beef_page.dart';
+import 'categoryPage/chicken_page.dart';
+import 'categoryPage/dessert_page.dart';
+import 'categoryPage/egg_page.dart';
+import 'categoryPage/fish_page.dart';
+import 'categoryPage/pork_page.dart';
+import 'categoryPage/rice_page.dart';
+import 'categoryPage/sea_foodpage.dart';
+import 'categoryPage/soup_page.dart';
+import 'categoryPage/vegetable_page.dart';
 
 class CategoryPage extends StatefulWidget {
   const CategoryPage({super.key});

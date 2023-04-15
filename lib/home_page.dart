@@ -210,8 +210,7 @@ class _HomePageState extends State<HomePage> {
                         'View All',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.grey.withOpacity(
-                              0.7), // Set the color to grey with an opacity of 0.7
+                          color: const Color(0xFFF66B0E).withOpacity(0.7),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -369,8 +368,9 @@ class _HomePageState extends State<HomePage> {
                         'View All',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.grey.withOpacity(
-                              0.7), // Set the color to grey with an opacity of 0.7
+                          color: const Color(0xFFF66B0E).withOpacity(
+                            0.7,
+                          ),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -491,8 +491,9 @@ class _HomePageState extends State<HomePage> {
                         'View All',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.grey.withOpacity(
-                              0.7), // Set the color to grey with an opacity of 0.7
+                          color: const Color(0xFFF66B0E).withOpacity(
+                            0.7,
+                          ),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -613,8 +614,9 @@ class _HomePageState extends State<HomePage> {
                         'View All',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.grey.withOpacity(
-                              0.7), // Set the color to grey with an opacity of 0.7
+                          color: const Color(0xFFF66B0E).withOpacity(
+                            0.7,
+                          ),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -735,8 +737,9 @@ class _HomePageState extends State<HomePage> {
                         'View All',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.grey.withOpacity(
-                              0.7), // Set the color to grey with an opacity of 0.7
+                          color: const Color(0xFFF66B0E).withOpacity(
+                            0.7,
+                          ),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -857,8 +860,9 @@ class _HomePageState extends State<HomePage> {
                         'View All',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.grey.withOpacity(
-                              0.7), // Set the color to grey with an opacity of 0.7
+                          color: const Color(0xFFF66B0E).withOpacity(
+                            0.7,
+                          ),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -979,8 +983,9 @@ class _HomePageState extends State<HomePage> {
                         'View All',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.grey.withOpacity(
-                              0.7), // Set the color to grey with an opacity of 0.7
+                          color: const Color(0xFFF66B0E).withOpacity(
+                            0.7,
+                          ),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -1101,8 +1106,9 @@ class _HomePageState extends State<HomePage> {
                         'View All',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.grey.withOpacity(
-                              0.7), // Set the color to grey with an opacity of 0.7
+                          color: const Color(0xFFF66B0E).withOpacity(
+                            0.7,
+                          ),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -1223,8 +1229,9 @@ class _HomePageState extends State<HomePage> {
                         'View All',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.grey.withOpacity(
-                              0.7), // Set the color to grey with an opacity of 0.7
+                          color: const Color(0xFFF66B0E).withOpacity(
+                            0.7,
+                          ),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -1345,8 +1352,9 @@ class _HomePageState extends State<HomePage> {
                         'View All',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.grey.withOpacity(
-                              0.7), // Set the color to grey with an opacity of 0.7
+                          color: const Color(0xFFF66B0E).withOpacity(
+                            0.7,
+                          ),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -1467,8 +1475,9 @@ class _HomePageState extends State<HomePage> {
                         'View All',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.grey.withOpacity(
-                              0.7), // Set the color to grey with an opacity of 0.7
+                          color: const Color(0xFFF66B0E).withOpacity(
+                            0.7,
+                          ),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
