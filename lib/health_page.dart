@@ -280,6 +280,9 @@ class _HealthPageState extends State<HealthPage> {
               ),
             ),
           ),
+          const SizedBox(
+            height: 20,
+          ),
         ],
       ),
     );
