@@ -19,6 +19,11 @@ class _FridgeTutorialState extends State<FridgeTutorial> {
       'Our fridge app helps users keep track of the ingredients they have in their kitchen by allowing them to input them into the app. This makes it easier for users to know what they have available to cook with and can help them plan meals more efficiently.',
     ),
     _buildOnboardingPage(
+      'assets/fridge_tuts/if.gif',
+      'Choose a Main Ingredient (optional)',
+      'You can choose a main ingredient from a list of options to customize your app experience. It\'s like choosing the perfect ingredient for your favorite recipe! It\'s optional, but it can add some fun and creativity. Feel free to explore and experiment.',
+    ),
+    _buildOnboardingPage(
       'assets/fridge_tuts/type.gif',
       'Type your available ingredients in your house',
       'Our searching process will guide you through the simple steps of typing in your available ingredients and finding delicious, creative recipes to make at home.',
@@ -60,9 +65,11 @@ class _FridgeTutorialState extends State<FridgeTutorial> {
                         ))
                     .toList(),
                 onPageChanged: (int index) {
-                  setState(() {
-                    _currentPageIndex = index;
-                  });
+                  setState(
+                    () {
+                      _currentPageIndex = index;
+                    },
+                  );
                 },
               ),
             ),

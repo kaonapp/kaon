@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:ui/dietPage/arthritispage.dart';
-import 'package:ui/dietPage/diabeticpage.dart';
-import 'package:ui/dietPage/standardpage.dart';
-import 'package:ui/dietPage/veganpage.dart';
-import 'package:ui/dietPage/weightpage.dart';
+import 'package:ui/dietPage/arthritis_page.dart';
+import 'package:ui/dietPage/diabetic_page.dart';
+import 'package:ui/dietPage/standard_page.dart';
+import 'package:ui/dietPage/vegan_page.dart';
+import 'package:ui/dietPage/weight_page.dart';
 
 import 'health_tutorial.dart';
 
