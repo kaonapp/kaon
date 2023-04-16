@@ -84,16 +84,20 @@ class _FridgeTutorialState extends State<FridgeTutorial> {
           ),
           const SizedBox(height: 16.0),
           if (_currentPageIndex != _onboardingPages.length - 1)
-            Align(
-              alignment: Alignment.topRight,
-              child: TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text(
-                  'Skip',
-                  style: TextStyle(
-                    color: Colors.grey,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Align(
+                alignment: Alignment.topRight,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    'Skip',
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 15,
+                    ),
                   ),
                 ),
               ),
@@ -101,17 +105,20 @@ class _FridgeTutorialState extends State<FridgeTutorial> {
 
           // Done button
           if (_currentPageIndex == _onboardingPages.length - 1)
-            Align(
-              alignment: Alignment.topRight,
-              child: TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text(
-                  'Done',
-                  style: TextStyle(
-                    color: Color(0xFFF66B0E),
-                    fontSize: 20,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Align(
+                alignment: Alignment.topRight,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    'Done',
+                    style: TextStyle(
+                      color: Color(0xFFF66B0E),
+                      fontSize: 20,
+                    ),
                   ),
                 ),
               ),
